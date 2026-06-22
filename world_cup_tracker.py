@@ -244,7 +244,7 @@ def write_html(standings, fantasy_rows):
     header h1 {{ font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }}
     header p {{ color: #79c0ff; margin-top: 0.4rem; font-size: 0.95rem; }}
     .tabs {{ display: flex; background: #161b22; border-bottom: 1px solid #30363d; padding: 0 1.5rem; }}
-    .tab {{ padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #8b949e; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; }}
+    .tab {{ padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #8b949e; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; white-space: nowrap; }}
     .tab:hover {{ color: #c9d1d9; }}
     .tab.active {{ color: #58a6ff; border-bottom-color: #1f6feb; }}
     .tab-content {{ display: none; padding: 1.5rem; max-width: 900px; margin: 0 auto; }}
@@ -273,8 +273,6 @@ def write_html(standings, fantasy_rows):
     tr.bronze td:first-child {{ border-left: 3px solid #cd7f32; }}
     tr.gold:hover td, tr.silver:hover td, tr.bronze:hover td {{ filter: brightness(1.2); }}
     .medal-cell {{ font-size: 1.2rem; text-align: center; }}
-
-    /* Clickable team name */
     .team-link {{ cursor: pointer; color: #e6edf3 !important; }}
     .team-link:hover {{ color: #58a6ff !important; text-decoration: underline; }}
     tr.gold .team-link {{ color: #ffd700 !important; font-weight: 700; }}
@@ -301,12 +299,43 @@ def write_html(standings, fantasy_rows):
     .modal-total {{ display: flex; justify-content: space-between; align-items: center; padding-top: 0.9rem; margin-top: 0.5rem; border-top: 2px solid #30363d; font-weight: 700; font-size: 1rem; }}
     .modal-total span:last-child {{ color: #58a6ff; font-size: 1.2rem; }}
 
+    /* Compare tab */
+    .cmp-bar {{ display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.75rem; flex-wrap: wrap; }}
+    .team-select {{ flex: 1; min-width: 180px; background: #161b22; color: #e6edf3; border: 1px solid #30363d; border-radius: 8px; padding: 0.65rem 0.8rem; font-size: 0.9rem; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b949e' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.75rem center; padding-right: 2rem; }}
+    .team-select:focus {{ outline: none; border-color: #58a6ff; box-shadow: 0 0 0 3px rgba(31,111,235,0.15); }}
+    .vs-badge {{ font-weight: 900; color: #484f58; font-size: 0.85rem; letter-spacing: 0.05em; flex-shrink: 0; }}
+    .cmp-empty {{ text-align: center; color: #484f58; padding: 3.5rem 1rem; font-size: 0.95rem; border: 1px dashed #21262d; border-radius: 10px; }}
+    .cmp-heads {{ display: grid; grid-template-columns: 1fr 160px 1fr; align-items: center; padding: 0.6rem 0.5rem 0.9rem; border-bottom: 2px solid #30363d; gap: 0.5rem; }}
+    .cmp-hname {{ font-weight: 700; font-size: 0.9rem; color: #e6edf3; line-height: 1.3; }}
+    .cmp-hname.r {{ text-align: right; }}
+    .cmp-hmid {{ text-align: center; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #484f58; }}
+    .cmp-row {{ display: grid; grid-template-columns: 1fr 160px 1fr; align-items: center; padding: 0.5rem 0.5rem; border-bottom: 1px solid #1a1f26; gap: 0.5rem; border-radius: 4px; }}
+    .cmp-row.shared {{ background: rgba(63,185,80,0.05); border-left: 2px solid rgba(63,185,80,0.25); }}
+    .cmp-side {{ display: flex; }}
+    .cmp-side.r {{ justify-content: flex-end; }}
+    .cmp-country {{ text-align: center; font-size: 0.83rem; color: #8b949e; padding: 0 0.25rem; }}
+    .cmp-row.shared .cmp-country {{ color: #c9d1d9; }}
+    .ptag {{ font-size: 0.82rem; font-weight: 700; padding: 0.18rem 0.5rem; border-radius: 5px; }}
+    .ptag.hi {{ color: #3fb950; background: rgba(63,185,80,0.12); }}
+    .ptag.mid {{ color: #d29922; background: rgba(210,153,34,0.12); }}
+    .ptag.lo {{ color: #6e7681; background: rgba(110,118,129,0.1); }}
+    .ptag.none {{ color: #30363d; }}
+    .cmp-totals {{ display: grid; grid-template-columns: 1fr 160px 1fr; padding: 0.9rem 0.5rem 0.5rem; border-top: 2px solid #30363d; margin-top: 0.25rem; gap: 0.5rem; align-items: center; }}
+    .cmp-tot {{ font-weight: 800; font-size: 1.1rem; color: #58a6ff; }}
+    .cmp-tot.r {{ text-align: right; }}
+    .cmp-tot-mid {{ text-align: center; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; color: #484f58; font-weight: 600; }}
+    .cmp-legend {{ display: flex; gap: 1rem; margin-top: 1.25rem; flex-wrap: wrap; }}
+    .legend-item {{ display: flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; color: #6e7681; }}
+    .legend-dot {{ width: 8px; height: 8px; border-radius: 50%; }}
+
     @media (max-width: 640px) {{
       .sm {{ display: none; }}
       header h1 {{ font-size: 1.4rem; }}
-      .tab {{ padding: 0.75rem 0.9rem; font-size: 0.85rem; }}
+      .tab {{ padding: 0.75rem 0.7rem; font-size: 0.8rem; }}
       .tab-content {{ padding: 0.75rem 0.25rem; }}
       td, th {{ padding: 0.55rem 0.4rem; }}
+      .cmp-heads, .cmp-row, .cmp-totals {{ grid-template-columns: 1fr 120px 1fr; }}
+      .cmp-country {{ font-size: 0.75rem; }}
     }}
   </style>
 </head>
@@ -319,6 +348,7 @@ def write_html(standings, fantasy_rows):
   <div class="tabs">
     <div class="tab active" onclick="switchTab('country', this)">&#127758; Country Standings</div>
     <div class="tab" onclick="switchTab('fantasy', this)">&#127942; Standings</div>
+    <div class="tab" onclick="switchTab('compare', this)">&#9889; Compare</div>
   </div>
 
   <div id="country" class="tab-content active">
@@ -347,7 +377,33 @@ def write_html(standings, fantasy_rows):
     </table>
   </div>
 
-  <p class="updated">Last updated: {now} &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: W=2pts / L=1pt &nbsp;&bull;&nbsp; Click a team to see their picks</p>
+  <div id="compare" class="tab-content">
+    <div class="cmp-bar">
+      <select id="sel1" class="team-select"><option value="">Select a team...</option></select>
+      <div class="vs-badge">VS</div>
+      <select id="sel2" class="team-select"><option value="">Select a team...</option></select>
+    </div>
+    <div id="cmp-placeholder" class="cmp-empty">&#128101; Select two teams above to compare their picks</div>
+    <div id="cmp-result" style="display:none">
+      <div class="cmp-heads">
+        <div id="h1" class="cmp-hname"></div>
+        <div class="cmp-hmid">Country</div>
+        <div id="h2" class="cmp-hname r"></div>
+      </div>
+      <div id="cmp-rows"></div>
+      <div class="cmp-totals">
+        <div id="tot1" class="cmp-tot"></div>
+        <div class="cmp-tot-mid">Total Pts</div>
+        <div id="tot2" class="cmp-tot r"></div>
+      </div>
+      <div class="cmp-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(63,185,80,0.4)"></div> Both teams have this country</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#30363d"></div> Only one team has this country</div>
+      </div>
+    </div>
+  </div>
+
+  <p class="updated">Last updated: {now} &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: W=2pts / L=1pt &nbsp;&bull;&nbsp; Click a team name to see their picks</p>
 
   <!-- Modal -->
   <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
@@ -374,13 +430,13 @@ def write_html(standings, fantasy_rows):
       el.classList.add('active');
     }}
 
+    // ── Standings modal ──────────────────────────────────────────
     function showTeam(teamName) {{
       const data = TEAM_DATA[teamName];
       if (!data) return;
       document.getElementById('modal-title').textContent = teamName;
       const sorted = [...data].sort((a, b) => b[1] - a[1]);
-      let total = 0;
-      let html = '';
+      let total = 0, html = '';
       sorted.forEach(([country, pts]) => {{
         total += pts;
         const cls = pts >= 3 ? 'hi' : pts >= 1 ? 'mid' : 'lo';
@@ -390,20 +446,69 @@ def write_html(standings, fantasy_rows):
       document.getElementById('modal-total').textContent = total + ' pts';
       document.getElementById('overlay').classList.add('open');
     }}
-
-    function closeModal() {{
-      document.getElementById('overlay').classList.remove('open');
-    }}
-
-    function handleOverlayClick(e) {{
-      if (e.target === document.getElementById('overlay')) closeModal();
-    }}
-
+    function closeModal() {{ document.getElementById('overlay').classList.remove('open'); }}
+    function handleOverlayClick(e) {{ if (e.target === document.getElementById('overlay')) closeModal(); }}
     document.addEventListener('keydown', e => {{ if (e.key === 'Escape') closeModal(); }});
-
     document.querySelectorAll('.team-link').forEach(el => {{
       el.addEventListener('click', () => showTeam(el.dataset.team));
     }});
+
+    // ── Compare tab ──────────────────────────────────────────────
+    const sortedTeams = Object.keys(TEAM_DATA).sort((a, b) => a.localeCompare(b));
+    ['sel1','sel2'].forEach(id => {{
+      const el = document.getElementById(id);
+      sortedTeams.forEach(name => {{
+        const o = document.createElement('option');
+        o.value = name; o.textContent = name;
+        el.appendChild(o);
+      }});
+      el.addEventListener('change', runCompare);
+    }});
+
+    function ptag(pts) {{
+      if (pts === undefined) return '<span class="ptag none">—</span>';
+      const cls = pts >= 3 ? 'hi' : pts >= 1 ? 'mid' : 'lo';
+      return `<span class="ptag ${{cls}}">${{pts}} pts</span>`;
+    }}
+
+    function runCompare() {{
+      const t1 = document.getElementById('sel1').value;
+      const t2 = document.getElementById('sel2').value;
+      if (!t1 || !t2) return;
+
+      const d1 = Object.fromEntries(TEAM_DATA[t1]);
+      const d2 = Object.fromEntries(TEAM_DATA[t2]);
+      const all = [...new Set([...Object.keys(d1), ...Object.keys(d2)])];
+
+      // Sort: shared first (by pts desc), then exclusives
+      all.sort((a, b) => {{
+        const sa = (a in d1) && (a in d2);
+        const sb = (b in d1) && (b in d2);
+        if (sa !== sb) return sa ? -1 : 1;
+        return Math.max(d2[b]||0, d1[b]||0) - Math.max(d2[a]||0, d1[a]||0);
+      }});
+
+      let t1Tot = 0, t2Tot = 0, html = '';
+      all.forEach(country => {{
+        const p1 = d1[country], p2 = d2[country];
+        const shared = p1 !== undefined && p2 !== undefined;
+        if (p1 !== undefined) t1Tot += p1;
+        if (p2 !== undefined) t2Tot += p2;
+        html += `<div class="cmp-row${{shared ? ' shared' : ''}}">
+          <div class="cmp-side">${{ptag(p1)}}</div>
+          <div class="cmp-country">${{country}}</div>
+          <div class="cmp-side r">${{ptag(p2)}}</div>
+        </div>`;
+      }});
+
+      document.getElementById('h1').textContent = t1;
+      document.getElementById('h2').textContent = t2;
+      document.getElementById('cmp-rows').innerHTML = html;
+      document.getElementById('tot1').textContent = t1Tot + ' pts';
+      document.getElementById('tot2').textContent = t2Tot + ' pts';
+      document.getElementById('cmp-result').style.display = 'block';
+      document.getElementById('cmp-placeholder').style.display = 'none';
+    }}
   </script>
 </body>
 </html>"""
