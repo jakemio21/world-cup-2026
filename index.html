@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2026 FIFA World Cup Standings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0d1117; color: #e6edf3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; }
+    header { background: linear-gradient(135deg, #0d2137 0%, #1a4a7a 100%); padding: 2.5rem 1.5rem; text-align: center; border-bottom: 2px solid #1f6feb; }
+    header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
+    header p { color: #79c0ff; margin-top: 0.4rem; font-size: 0.95rem; }
+    .tabs { display: flex; gap: 0; background: #161b22; border-bottom: 1px solid #30363d; padding: 0 1.5rem; }
+    .tab { padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #8b949e; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; }
+    .tab:hover { color: #c9d1d9; }
+    .tab.active { color: #58a6ff; border-bottom-color: #1f6feb; }
+    .tab-content { display: none; padding: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .tab-content.active { display: block; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
+    thead tr { background: #161b22; }
+    th { padding: 0.65rem 0.75rem; text-align: center; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; border-bottom: 2px solid #21262d; white-space: nowrap; }
+    th.left { text-align: left; }
+    td { padding: 0.65rem 0.75rem; border-bottom: 1px solid #21262d; }
+    tbody tr:hover td { background: #1c2128; }
+    tbody tr:last-child td { border-bottom: none; }
+    .num { text-align: center; color: #c9d1d9; }
+    .name { text-align: left; font-weight: 500; }
+    .pts { text-align: center; font-weight: 700; color: #58a6ff; }
+    .pos { color: #3fb950; font-weight: 600; }
+    .neg { color: #f85149; font-weight: 600; }
+    .countries { text-align: left; font-size: 0.78rem; color: #8b949e; line-height: 1.5; }
+    .updated { text-align: center; color: #484f58; font-size: 0.78rem; padding: 2rem 1rem; border-top: 1px solid #21262d; margin-top: 1rem; }
+    .badge { display: inline-block; background: #1f6feb22; color: #58a6ff; border: 1px solid #1f6feb55; border-radius: 4px; padding: 0.1rem 0.4rem; font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem; vertical-align: middle; }
+    @media (max-width: 640px) {
+      .sm { display: none; }
+      header h1 { font-size: 1.4rem; }
+      .tab { padding: 0.75rem 1rem; font-size: 0.85rem; }
+      .tab-content { padding: 1rem 0.5rem; }
+      td, th { padding: 0.55rem 0.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>&#9917; 2026 FIFA World Cup</h1>
+    <p>Live Standings &mdash; Custom Points System</p>
+  </header>
+
+  <div class="tabs">
+    <div class="tab active" onclick="switchTab('country', this)">&#127758; Country Standings</div>
+    <div class="tab" onclick="switchTab('fantasy', this)">&#127942; Fantasy Standings</div>
+  </div>
+
+  <div id="country" class="tab-content active">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th class="left">Country</th>
+          <th class="sm">GP</th>
+          <th>W</th>
+          <th class="sm">D</th>
+          <th class="sm">L</th>
+          <th class="sm">GF</th>
+          <th class="sm">GA</th>
+          <th>GD</th>
+          <th>Pts</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr>
+              <td class="num">1</td>
+              <td class="name">Germany</td>
+              <td class="num sm">2</td>
+              <td class="num">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">9</td>
+              <td class="num sm">2</td>
+              <td class="num pos">+7</td>
+              <td class="pts">6</td>
+            </tr>
+            <tr>
+              <td class="num">2</td>
+              <td class="name">United States</td>
+              <td class="num sm">2</td>
+              <td class="num">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">6</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+5</td>
+              <td class="pts">6</td>
+            </tr>
+            <tr>
+              <td class="num">3</td>
+              <td class="name">Argentina</td>
+              <td class="num sm">2</td>
+              <td class="num">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">5</td>
+              <td class="num sm">0</td>
+              <td class="num pos">+5</td>
+              <td class="pts">6</td>
+            </tr>
+            <tr>
+              <td class="num">4</td>
+              <td class="name">Mexico</td>
+              <td class="num sm">2</td>
+              <td class="num">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">3</td>
+              <td class="num sm">0</td>
+              <td class="num pos">+3</td>
+              <td class="pts">6</td>
+            </tr>
+            <tr>
+              <td class="num">5</td>
+              <td class="name">Canada</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">7</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+6</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">6</td>
+              <td class="name">Netherlands</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">7</td>
+              <td class="num sm">3</td>
+              <td class="num pos">+4</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">7</td>
+              <td class="name">Japan</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">6</td>
+              <td class="num sm">2</td>
+              <td class="num pos">+4</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">8</td>
+              <td class="name">Spain</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">4</td>
+              <td class="num sm">0</td>
+              <td class="num pos">+4</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">9</td>
+              <td class="name">Switzerland</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">5</td>
+              <td class="num sm">2</td>
+              <td class="num pos">+3</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">10</td>
+              <td class="name">Brazil</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">4</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+3</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">11</td>
+              <td class="name">Egypt</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">4</td>
+              <td class="num sm">2</td>
+              <td class="num pos">+2</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">12</td>
+              <td class="name">Morocco</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+1</td>
+              <td class="pts">4</td>
+            </tr>
+            <tr>
+              <td class="num">13</td>
+              <td class="name">Norway</td>
+              <td class="num sm">1</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">4</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+3</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">14</td>
+              <td class="name">England</td>
+              <td class="num sm">1</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">4</td>
+              <td class="num sm">2</td>
+              <td class="num pos">+2</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">15</td>
+              <td class="name">France</td>
+              <td class="num sm">1</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">3</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+2</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">16</td>
+              <td class="name">Colombia</td>
+              <td class="num sm">1</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">3</td>
+              <td class="num sm">1</td>
+              <td class="num pos">+2</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">17</td>
+              <td class="name">Ghana</td>
+              <td class="num sm">1</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num pos">+1</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">18</td>
+              <td class="name">Sweden</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">6</td>
+              <td class="num sm">6</td>
+              <td class="num num">0</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">19</td>
+              <td class="name">Austria</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">3</td>
+              <td class="num sm">3</td>
+              <td class="num num">0</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">20</td>
+              <td class="name">South Korea</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">2</td>
+              <td class="num num">0</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">21</td>
+              <td class="name">Australia</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">2</td>
+              <td class="num num">0</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">22</td>
+              <td class="name">Ivory Coast</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">2</td>
+              <td class="num num">0</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">23</td>
+              <td class="name">Scotland</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num num">0</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">24</td>
+              <td class="name">Paraguay</td>
+              <td class="num sm">2</td>
+              <td class="num">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">4</td>
+              <td class="num neg">-2</td>
+              <td class="pts">3</td>
+            </tr>
+            <tr>
+              <td class="num">25</td>
+              <td class="name">Uruguay</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">3</td>
+              <td class="num sm">3</td>
+              <td class="num num">0</td>
+              <td class="pts">2</td>
+            </tr>
+            <tr>
+              <td class="num">26</td>
+              <td class="name">Cape Verde</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">2</td>
+              <td class="num num">0</td>
+              <td class="pts">2</td>
+            </tr>
+            <tr>
+              <td class="num">27</td>
+              <td class="name">Iran</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">2</td>
+              <td class="num num">0</td>
+              <td class="pts">2</td>
+            </tr>
+            <tr>
+              <td class="num">28</td>
+              <td class="name">Belgium</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num num">0</td>
+              <td class="pts">2</td>
+            </tr>
+            <tr>
+              <td class="num">29</td>
+              <td class="name">Portugal</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num num">0</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">30</td>
+              <td class="name">Congo DR</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num num">0</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">31</td>
+              <td class="name">Czechia</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-1</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">32</td>
+              <td class="name">Ecuador</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num neg">-1</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">33</td>
+              <td class="name">New Zealand</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">3</td>
+              <td class="num sm">5</td>
+              <td class="num neg">-2</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">34</td>
+              <td class="name">South Africa</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-2</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">35</td>
+              <td class="name">Bosnia-Herzegovina</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">5</td>
+              <td class="num neg">-3</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">36</td>
+              <td class="name">Saudi Arabia</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">5</td>
+              <td class="num neg">-4</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">37</td>
+              <td class="name">Qatar</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">7</td>
+              <td class="num neg">-6</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">38</td>
+              <td class="name">Curaçao</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">7</td>
+              <td class="num neg">-6</td>
+              <td class="pts">1</td>
+            </tr>
+            <tr>
+              <td class="num">39</td>
+              <td class="name">Panama</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num neg">-1</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">40</td>
+              <td class="name">Croatia</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">2</td>
+              <td class="num sm">4</td>
+              <td class="num neg">-2</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">41</td>
+              <td class="name">Senegal</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-2</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">42</td>
+              <td class="name">Jordan</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-2</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">43</td>
+              <td class="name">Uzbekistan</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-2</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">44</td>
+              <td class="name">Iraq</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">1</td>
+              <td class="num sm">4</td>
+              <td class="num neg">-3</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">45</td>
+              <td class="name">Türkiye</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-3</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">46</td>
+              <td class="name">Algeria</td>
+              <td class="num sm">1</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">1</td>
+              <td class="num sm">0</td>
+              <td class="num sm">3</td>
+              <td class="num neg">-3</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">47</td>
+              <td class="name">Haiti</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">0</td>
+              <td class="num sm">4</td>
+              <td class="num neg">-4</td>
+              <td class="pts">0</td>
+            </tr>
+            <tr>
+              <td class="num">48</td>
+              <td class="name">Tunisia</td>
+              <td class="num sm">2</td>
+              <td class="num">0</td>
+              <td class="num sm">0</td>
+              <td class="num sm">2</td>
+              <td class="num sm">1</td>
+              <td class="num sm">9</td>
+              <td class="num neg">-8</td>
+              <td class="pts">0</td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="fantasy" class="tab-content">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th class="left">Team</th>
+          <th>Pts</th>
+          <th class="left sm">Countries &amp; Points</th>
+        </tr>
+      </thead>
+      <tbody>
+            <tr>
+              <td class="num">1</td>
+              <td class="name">Heim's Dimes</td>
+              <td class="pts">40</td>
+              <td class="countries sm">France (3), Morocco (4), Germany (6), Mexico (6), Japan (4), South Korea (3), Canada (4), Paraguay (3), Scotland (3), Qatar (1), Cape Verde (2), Curaçao (1)</td>
+            </tr>
+            <tr>
+              <td class="num">2</td>
+              <td class="name">Arbitrage United FC</td>
+              <td class="pts">39</td>
+              <td class="countries sm">Argentina (6), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Norway (3), Ivory Coast (3), Czechia (1), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">3</td>
+              <td class="name">MJ's Team</td>
+              <td class="pts">39</td>
+              <td class="countries sm">Spain (4), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Ivory Coast (3), Scotland (3), Uzbekistan (0), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">4</td>
+              <td class="name">The Heeters</td>
+              <td class="pts">39</td>
+              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Ivory Coast (3), Scotland (3), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">5</td>
+              <td class="name">And It Was All Yellow... Cards</td>
+              <td class="pts">38</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Austria (3), Norway (3), Paraguay (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">6</td>
+              <td class="name">Road to Glory</td>
+              <td class="pts">38</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), United States (6), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">7</td>
+              <td class="name">Oliver's Army</td>
+              <td class="pts">37</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">8</td>
+              <td class="name">I don't know football</td>
+              <td class="pts">37</td>
+              <td class="countries sm">Argentina (6), Portugal (1), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Paraguay (3), Congo DR (1), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">9</td>
+              <td class="name">GAM FC</td>
+              <td class="pts">36</td>
+              <td class="countries sm">England (3), Portugal (1), Germany (6), Mexico (6), Japan (4), Australia (3), Canada (4), Paraguay (3), Scotland (3), Uzbekistan (0), Jordan (0), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">10</td>
+              <td class="name">Led_Zep</td>
+              <td class="pts">36</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Japan (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">11</td>
+              <td class="name">Italy should have been here</td>
+              <td class="pts">36</td>
+              <td class="countries sm">Spain (4), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">12</td>
+              <td class="name">GAM Digital</td>
+              <td class="pts">36</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), United States (6), Japan (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">13</td>
+              <td class="name">Spain</td>
+              <td class="pts">36</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Japan (4), Ecuador (1), Norway (3), Paraguay (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">14</td>
+              <td class="name">Toronto Inferno</td>
+              <td class="pts">36</td>
+              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Mexico (6), Japan (4), Ecuador (1), Canada (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Cape Verde (2), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">15</td>
+              <td class="name">Shai Gorgeous</td>
+              <td class="pts">35</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Switzerland (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">16</td>
+              <td class="name">Team Matthew</td>
+              <td class="pts">35</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), United States (6), Switzerland (4), South Korea (3), Norway (3), Sweden (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">17</td>
+              <td class="name">Pelley FC 2</td>
+              <td class="pts">35</td>
+              <td class="countries sm">France (3), Netherlands (4), Germany (6), Uruguay (2), Switzerland (4), Austria (3), Egypt (4), Ivory Coast (3), Congo DR (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">18</td>
+              <td class="name">Milos Vukovic</td>
+              <td class="pts">34</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Norway (3), Ivory Coast (3), Tunisia (0), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">19</td>
+              <td class="name">Shai Gorgeous Alexander</td>
+              <td class="pts">34</td>
+              <td class="countries sm">England (3), Portugal (1), Germany (6), United States (6), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">20</td>
+              <td class="name">Andrew Hakes</td>
+              <td class="pts">33</td>
+              <td class="countries sm">England (3), Brazil (4), Colombia (3), Mexico (6), Iran (2), South Korea (3), Canada (4), Ivory Coast (3), Congo DR (1), South Africa (1), Jordan (0), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">21</td>
+              <td class="name">True Be-Leaf-ers</td>
+              <td class="pts">33</td>
+              <td class="countries sm">France (3), Brazil (4), Belgium (2), Uruguay (2), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Scotland (3), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">22</td>
+              <td class="name">WhatDoesOffsideEvenMean?</td>
+              <td class="pts">33</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Japan (4), Ecuador (1), Norway (3), Ivory Coast (3), Scotland (3), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">23</td>
+              <td class="name">Fake It Till You Jake It</td>
+              <td class="pts">33</td>
+              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Senegal (0), Japan (4), South Korea (3), Egypt (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">24</td>
+              <td class="name">Les Rouges 2</td>
+              <td class="pts">32</td>
+              <td class="countries sm">France (3), Brazil (4), Colombia (3), Uruguay (2), Japan (4), Austria (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">25</td>
+              <td class="name">Canada</td>
+              <td class="pts">32</td>
+              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), United States (6), Switzerland (4), Austria (3), Canada (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">26</td>
+              <td class="name">Dave W's Team</td>
+              <td class="pts">32</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">27</td>
+              <td class="name">Pelley FC 1</td>
+              <td class="pts">31</td>
+              <td class="countries sm">England (3), Portugal (1), Germany (6), Mexico (6), Türkiye (0), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">28</td>
+              <td class="name">Les Rouges 1</td>
+              <td class="pts">31</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Senegal (0), Switzerland (4), Austria (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">29</td>
+              <td class="name">Big Dawgz</td>
+              <td class="pts">31</td>
+              <td class="countries sm">France (3), Portugal (1), Germany (6), Uruguay (2), Japan (4), South Korea (3), Norway (3), Sweden (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">30</td>
+              <td class="name">Saqib Shamasdin</td>
+              <td class="pts">31</td>
+              <td class="countries sm">France (3), Portugal (1), Belgium (2), United States (6), Japan (4), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">31</td>
+              <td class="name">JHoyle21</td>
+              <td class="pts">31</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">32</td>
+              <td class="name">Aaron Ma</td>
+              <td class="pts">30</td>
+              <td class="countries sm">France (3), Portugal (1), Germany (6), Mexico (6), Türkiye (0), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), Iraq (0), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">33</td>
+              <td class="name">Outperformance</td>
+              <td class="pts">30</td>
+              <td class="countries sm">France (3), Portugal (1), Germany (6), Mexico (6), Switzerland (4), South Korea (3), Algeria (0), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">34</td>
+              <td class="name">Big Dawgz 2</td>
+              <td class="pts">30</td>
+              <td class="countries sm">France (3), Portugal (1), Colombia (3), Mexico (6), Japan (4), Ecuador (1), Canada (4), Ivory Coast (3), Congo DR (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">35</td>
+              <td class="name">Gunners FC</td>
+              <td class="pts">30</td>
+              <td class="countries sm">England (3), Portugal (1), Germany (6), Senegal (0), Switzerland (4), Ecuador (1), Egypt (4), Sweden (3), Scotland (3), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">36</td>
+              <td class="name">Party of 5</td>
+              <td class="pts">30</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Switzerland (4), South Korea (3), Norway (3), Sweden (3), Czechia (1), South Africa (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">37</td>
+              <td class="name">Capital Gains FC</td>
+              <td class="pts">30</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Japan (4), South Korea (3), Algeria (0), Ivory Coast (3), Czechia (1), Uzbekistan (0), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">38</td>
+              <td class="name">ROI naldo</td>
+              <td class="pts">30</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Japan (4), Ecuador (1), Algeria (0), Ivory Coast (3), Scotland (3), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">39</td>
+              <td class="name">Competitive Intelligence</td>
+              <td class="pts">30</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Japan (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">40</td>
+              <td class="name">Project 2026</td>
+              <td class="pts">30</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Japan (4), Austria (3), Norway (3), Paraguay (3), Czechia (1), Uzbekistan (0), Jordan (0), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">41</td>
+              <td class="name">Team Chicken Dinner</td>
+              <td class="pts">29</td>
+              <td class="countries sm">France (3), Portugal (1), Croatia (0), Mexico (6), Switzerland (4), Australia (3), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">42</td>
+              <td class="name">E(xtremely) T(alented) F(ootballer)s</td>
+              <td class="pts">29</td>
+              <td class="countries sm">Spain (4), Portugal (1), Colombia (3), Senegal (0), Japan (4), Austria (3), Canada (4), Ivory Coast (3), Scotland (3), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">43</td>
+              <td class="name">Balham FC</td>
+              <td class="pts">29</td>
+              <td class="countries sm">France (3), Portugal (1), Germany (6), Senegal (0), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">44</td>
+              <td class="name">Team Dreyer</td>
+              <td class="pts">29</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Türkiye (0), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Qatar (1), Jordan (0), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">45</td>
+              <td class="name">France</td>
+              <td class="pts">29</td>
+              <td class="countries sm">France (3), Portugal (1), Colombia (3), Uruguay (2), Japan (4), South Korea (3), Canada (4), Paraguay (3), Czechia (1), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">46</td>
+              <td class="name">Bryant Spivak</td>
+              <td class="pts">29</td>
+              <td class="countries sm">France (3), Brazil (4), Germany (6), Mexico (6), Türkiye (0), Ecuador (1), Norway (3), Ivory Coast (3), Czechia (1), South Africa (1), Jordan (0), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">47</td>
+              <td class="name">Performance</td>
+              <td class="pts">29</td>
+              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), Uruguay (2), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">48</td>
+              <td class="name">Emerging Market Maestro's</td>
+              <td class="pts">29</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Senegal (0), Japan (4), Ecuador (1), Norway (3), Ivory Coast (3), Scotland (3), Iraq (0), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">49</td>
+              <td class="name">Benchmark</td>
+              <td class="pts">29</td>
+              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Senegal (0), Iran (2), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">50</td>
+              <td class="name">Portugal 1966</td>
+              <td class="pts">28</td>
+              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), United States (6), Türkiye (0), Austria (3), Norway (3), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">51</td>
+              <td class="name">Italy</td>
+              <td class="pts">27</td>
+              <td class="countries sm">France (3), Portugal (1), Germany (6), Uruguay (2), Türkiye (0), Austria (3), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">52</td>
+              <td class="name">The Mainoo Event</td>
+              <td class="pts">27</td>
+              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), Mexico (6), Türkiye (0), Ecuador (1), Norway (3), Ivory Coast (3), Scotland (3), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">53</td>
+              <td class="name">Berserkers</td>
+              <td class="pts">27</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Uzbekistan (0), Saudi Arabia (1), New Zealand (1)</td>
+            </tr>
+            <tr>
+              <td class="num">54</td>
+              <td class="name">Gov Bonds Intern</td>
+              <td class="pts">27</td>
+              <td class="countries sm">Spain (4), Portugal (1), Germany (6), United States (6), Türkiye (0), Ecuador (1), Algeria (0), Sweden (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">55</td>
+              <td class="name">Team Chicken Dinner (vibes)</td>
+              <td class="pts">27</td>
+              <td class="countries sm">Spain (4), Morocco (4), Belgium (2), Senegal (0), Japan (4), South Korea (3), Canada (4), Panama (0), Czechia (1), Uzbekistan (0), Cape Verde (2), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">56</td>
+              <td class="name">Christine Ramsay</td>
+              <td class="pts">27</td>
+              <td class="countries sm">Spain (4), Morocco (4), Croatia (0), Mexico (6), Japan (4), Ecuador (1), Algeria (0), Paraguay (3), Tunisia (0), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
+            </tr>
+            <tr>
+              <td class="num">57</td>
+              <td class="name">Turkey4TheWin</td>
+              <td class="pts">23</td>
+              <td class="countries sm">Spain (4), Brazil (4), Germany (6), Senegal (0), Türkiye (0), Ecuador (1), Norway (3), Ivory Coast (3), Tunisia (0), South Africa (1), Jordan (0), New Zealand (1)</td>
+            </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="updated">Last updated: June 22, 2026 at 19:33 UTC &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: Winner=2pts, Loser=1pt</p>
+
+  <script>
+    function switchTab(name, el) {
+      document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+      document.getElementById(name).classList.add('active');
+      el.classList.add('active');
+    }
+  </script>
+</body>
+</html>
