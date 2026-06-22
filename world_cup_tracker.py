@@ -176,9 +176,10 @@ def build_fantasy_standings(country_standings):
     country_pts = {name: data["Pts"] for name, data in country_standings.items()}
     rows = []
     for team_name, countries in FANTASY_TEAMS.items():
-        total = sum(country_pts.get(c, 0) for c in countries)
-        breakdown = ", ".join(f"{c} ({country_pts.get(c, 0)})" for c in countries)
-        rows.append({"Team": team_name, "Total Pts": total, "Countries": breakdown})
+        country_data = [(c, country_pts.get(c, 0)) for c in countries]
+        total = sum(pts for _, pts in country_data)
+        breakdown = ", ".join(f"{c} ({pts})" for c, pts in country_data)
+        rows.append({"Team": team_name, "Total Pts": total, "Countries": breakdown, "CountryData": country_data})
     rows.sort(key=lambda r: r["Total Pts"], reverse=True)
     for i, r in enumerate(rows, 1):
         r["Rank"] = i
@@ -186,8 +187,10 @@ def build_fantasy_standings(country_standings):
 
 
 def write_html(standings, fantasy_rows):
+    import json as _json
     now = datetime.utcnow().strftime("%B %d, %Y at %H:%M UTC")
 
+    # Country table rows
     sorted_countries = sorted(standings.values(), key=lambda x: (-x["Pts"], -x["GD"], -x["GF"]))
     country_rows_html = ""
     for i, row in enumerate(sorted_countries, 1):
@@ -208,15 +211,25 @@ def write_html(standings, fantasy_rows):
               <td class="pts">{row['Pts']}</td>
             </tr>"""
 
+    # Fantasy table rows with podium styling
+    medals = {1: "&#127945;", 2: "&#129352;", 3: "&#129353;"}
+    podium_cls = {1: "gold", 2: "silver", 3: "bronze"}
     fantasy_rows_html = ""
     for r in fantasy_rows:
+        rank = r["Rank"]
+        medal_html = medals.get(rank, f'<span class="rnum">{rank}</span>')
+        row_cls = podium_cls.get(rank, "")
+        safe_team = r["Team"].replace("&", "&amp;")
         fantasy_rows_html += f"""
-            <tr>
-              <td class="num">{r['Rank']}</td>
-              <td class="name">{r['Team']}</td>
+            <tr class="{row_cls}">
+              <td class="num medal-cell">{medal_html}</td>
+              <td class="name team-link" data-team="{safe_team}">{safe_team}</td>
               <td class="pts">{r['Total Pts']}</td>
-              <td class="countries sm">{r['Countries']}</td>
             </tr>"""
+
+    # Embed country data for popups
+    team_data = {r["Team"]: r["CountryData"] for r in fantasy_rows}
+    team_data_json = _json.dumps(team_data, ensure_ascii=False)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -230,17 +243,17 @@ def write_html(standings, fantasy_rows):
     header {{ background: linear-gradient(135deg, #0d2137 0%, #1a4a7a 100%); padding: 2.5rem 1.5rem; text-align: center; border-bottom: 2px solid #1f6feb; }}
     header h1 {{ font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }}
     header p {{ color: #79c0ff; margin-top: 0.4rem; font-size: 0.95rem; }}
-    .tabs {{ display: flex; gap: 0; background: #161b22; border-bottom: 1px solid #30363d; padding: 0 1.5rem; }}
+    .tabs {{ display: flex; background: #161b22; border-bottom: 1px solid #30363d; padding: 0 1.5rem; }}
     .tab {{ padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #8b949e; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; }}
     .tab:hover {{ color: #c9d1d9; }}
     .tab.active {{ color: #58a6ff; border-bottom-color: #1f6feb; }}
-    .tab-content {{ display: none; padding: 1.5rem; max-width: 1100px; margin: 0 auto; }}
+    .tab-content {{ display: none; padding: 1.5rem; max-width: 900px; margin: 0 auto; }}
     .tab-content.active {{ display: block; }}
     table {{ width: 100%; border-collapse: collapse; font-size: 0.93rem; }}
     thead tr {{ background: #161b22; }}
     th {{ padding: 0.65rem 0.75rem; text-align: center; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; border-bottom: 2px solid #21262d; white-space: nowrap; }}
     th.left {{ text-align: left; }}
-    td {{ padding: 0.65rem 0.75rem; border-bottom: 1px solid #21262d; }}
+    td {{ padding: 0.7rem 0.75rem; border-bottom: 1px solid #21262d; }}
     tbody tr:hover td {{ background: #1c2128; }}
     tbody tr:last-child td {{ border-bottom: none; }}
     .num {{ text-align: center; color: #c9d1d9; }}
@@ -248,14 +261,51 @@ def write_html(standings, fantasy_rows):
     .pts {{ text-align: center; font-weight: 700; color: #58a6ff; }}
     .pos {{ color: #3fb950; font-weight: 600; }}
     .neg {{ color: #f85149; font-weight: 600; }}
-    .countries {{ text-align: left; font-size: 0.78rem; color: #8b949e; line-height: 1.5; }}
     .updated {{ text-align: center; color: #484f58; font-size: 0.78rem; padding: 2rem 1rem; border-top: 1px solid #21262d; margin-top: 1rem; }}
-    .badge {{ display: inline-block; background: #1f6feb22; color: #58a6ff; border: 1px solid #1f6feb55; border-radius: 4px; padding: 0.1rem 0.4rem; font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem; vertical-align: middle; }}
+    .rnum {{ color: #8b949e; font-size: 0.85rem; }}
+
+    /* Podium rows */
+    tr.gold td {{ background: linear-gradient(90deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.02) 60%, transparent 100%); }}
+    tr.silver td {{ background: linear-gradient(90deg, rgba(192,192,192,0.08) 0%, rgba(192,192,192,0.01) 60%, transparent 100%); }}
+    tr.bronze td {{ background: linear-gradient(90deg, rgba(205,127,50,0.1) 0%, rgba(205,127,50,0.02) 60%, transparent 100%); }}
+    tr.gold td:first-child {{ border-left: 3px solid #ffd700; }}
+    tr.silver td:first-child {{ border-left: 3px solid #c0c0c0; }}
+    tr.bronze td:first-child {{ border-left: 3px solid #cd7f32; }}
+    tr.gold:hover td, tr.silver:hover td, tr.bronze:hover td {{ filter: brightness(1.2); }}
+    .medal-cell {{ font-size: 1.2rem; text-align: center; }}
+
+    /* Clickable team name */
+    .team-link {{ cursor: pointer; color: #e6edf3 !important; }}
+    .team-link:hover {{ color: #58a6ff !important; text-decoration: underline; }}
+    tr.gold .team-link {{ color: #ffd700 !important; font-weight: 700; }}
+    tr.silver .team-link {{ color: #c0c0c0 !important; font-weight: 700; }}
+    tr.bronze .team-link {{ color: #cd7f32 !important; font-weight: 700; }}
+    tr.gold:hover .team-link, tr.silver:hover .team-link, tr.bronze:hover .team-link {{ text-decoration: underline; }}
+
+    /* Modal */
+    .overlay {{ display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }}
+    .overlay.open {{ display: flex; }}
+    .modal {{ background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 1.5rem; width: 92%; max-width: 420px; max-height: 88vh; overflow-y: auto; animation: pop 0.18s ease; }}
+    @keyframes pop {{ from {{ opacity:0; transform:scale(0.93) translateY(8px); }} to {{ opacity:1; transform:scale(1) translateY(0); }} }}
+    .modal-head {{ display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; }}
+    .modal-title {{ font-size: 1.05rem; font-weight: 700; line-height: 1.3; padding-right: 1rem; }}
+    .modal-close {{ background: #21262d; border: none; color: #8b949e; width: 28px; height: 28px; border-radius: 50%; font-size: 1rem; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }}
+    .modal-close:hover {{ background: #30363d; color: #e6edf3; }}
+    .country-row {{ display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid #21262d; gap: 0.5rem; }}
+    .country-row:last-of-type {{ border-bottom: none; }}
+    .c-name {{ font-size: 0.9rem; color: #c9d1d9; }}
+    .c-pts {{ font-size: 0.85rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 5px; min-width: 40px; text-align: center; }}
+    .c-pts.hi {{ color: #3fb950; background: rgba(63,185,80,0.12); }}
+    .c-pts.mid {{ color: #d29922; background: rgba(210,153,34,0.12); }}
+    .c-pts.lo {{ color: #6e7681; background: rgba(110,118,129,0.1); }}
+    .modal-total {{ display: flex; justify-content: space-between; align-items: center; padding-top: 0.9rem; margin-top: 0.5rem; border-top: 2px solid #30363d; font-weight: 700; font-size: 1rem; }}
+    .modal-total span:last-child {{ color: #58a6ff; font-size: 1.2rem; }}
+
     @media (max-width: 640px) {{
       .sm {{ display: none; }}
       header h1 {{ font-size: 1.4rem; }}
-      .tab {{ padding: 0.75rem 1rem; font-size: 0.85rem; }}
-      .tab-content {{ padding: 1rem 0.5rem; }}
+      .tab {{ padding: 0.75rem 0.9rem; font-size: 0.85rem; }}
+      .tab-content {{ padding: 0.75rem 0.25rem; }}
       td, th {{ padding: 0.55rem 0.4rem; }}
     }}
   </style>
@@ -268,23 +318,16 @@ def write_html(standings, fantasy_rows):
 
   <div class="tabs">
     <div class="tab active" onclick="switchTab('country', this)">&#127758; Country Standings</div>
-    <div class="tab" onclick="switchTab('fantasy', this)">&#127942; Fantasy Standings</div>
+    <div class="tab" onclick="switchTab('fantasy', this)">&#127942; Standings</div>
   </div>
 
   <div id="country" class="tab-content active">
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th class="left">Country</th>
-          <th class="sm">GP</th>
-          <th>W</th>
-          <th class="sm">D</th>
-          <th class="sm">L</th>
-          <th class="sm">GF</th>
-          <th class="sm">GA</th>
-          <th>GD</th>
-          <th>Pts</th>
+          <th>#</th><th class="left">Country</th>
+          <th class="sm">GP</th><th>W</th><th class="sm">D</th><th class="sm">L</th>
+          <th class="sm">GF</th><th class="sm">GA</th><th>GD</th><th>Pts</th>
         </tr>
       </thead>
       <tbody>{country_rows_html}
@@ -296,10 +339,7 @@ def write_html(standings, fantasy_rows):
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th class="left">Team</th>
-          <th>Pts</th>
-          <th class="left sm">Countries &amp; Points</th>
+          <th>#</th><th class="left">Team</th><th>Pts</th>
         </tr>
       </thead>
       <tbody>{fantasy_rows_html}
@@ -307,15 +347,63 @@ def write_html(standings, fantasy_rows):
     </table>
   </div>
 
-  <p class="updated">Last updated: {now} &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: Winner=2pts, Loser=1pt</p>
+  <p class="updated">Last updated: {now} &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: W=2pts / L=1pt &nbsp;&bull;&nbsp; Click a team to see their picks</p>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+      <div class="modal-head">
+        <div class="modal-title" id="modal-title"></div>
+        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      </div>
+      <div id="modal-body"></div>
+      <div class="modal-total">
+        <span>Total Points</span>
+        <span id="modal-total"></span>
+      </div>
+    </div>
+  </div>
 
   <script>
+    const TEAM_DATA = {team_data_json};
+
     function switchTab(name, el) {{
-      document.querySelectorAll('.tab-content').forEach(function(t) {{ t.classList.remove('active'); }});
-      document.querySelectorAll('.tab').forEach(function(t) {{ t.classList.remove('active'); }});
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.getElementById(name).classList.add('active');
       el.classList.add('active');
     }}
+
+    function showTeam(teamName) {{
+      const data = TEAM_DATA[teamName];
+      if (!data) return;
+      document.getElementById('modal-title').textContent = teamName;
+      const sorted = [...data].sort((a, b) => b[1] - a[1]);
+      let total = 0;
+      let html = '';
+      sorted.forEach(([country, pts]) => {{
+        total += pts;
+        const cls = pts >= 3 ? 'hi' : pts >= 1 ? 'mid' : 'lo';
+        html += `<div class="country-row"><span class="c-name">${{country}}</span><span class="c-pts ${{cls}}">${{pts}} pts</span></div>`;
+      }});
+      document.getElementById('modal-body').innerHTML = html;
+      document.getElementById('modal-total').textContent = total + ' pts';
+      document.getElementById('overlay').classList.add('open');
+    }}
+
+    function closeModal() {{
+      document.getElementById('overlay').classList.remove('open');
+    }}
+
+    function handleOverlayClick(e) {{
+      if (e.target === document.getElementById('overlay')) closeModal();
+    }}
+
+    document.addEventListener('keydown', e => {{ if (e.key === 'Escape') closeModal(); }});
+
+    document.querySelectorAll('.team-link').forEach(el => {{
+      el.addEventListener('click', () => showTeam(el.dataset.team));
+    }});
   </script>
 </body>
 </html>"""

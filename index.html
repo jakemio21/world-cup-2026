@@ -10,17 +10,17 @@
     header { background: linear-gradient(135deg, #0d2137 0%, #1a4a7a 100%); padding: 2.5rem 1.5rem; text-align: center; border-bottom: 2px solid #1f6feb; }
     header h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; }
     header p { color: #79c0ff; margin-top: 0.4rem; font-size: 0.95rem; }
-    .tabs { display: flex; gap: 0; background: #161b22; border-bottom: 1px solid #30363d; padding: 0 1.5rem; }
+    .tabs { display: flex; background: #161b22; border-bottom: 1px solid #30363d; padding: 0 1.5rem; }
     .tab { padding: 1rem 1.5rem; cursor: pointer; font-weight: 600; font-size: 0.95rem; color: #8b949e; border-bottom: 3px solid transparent; transition: color 0.15s, border-color 0.15s; user-select: none; }
     .tab:hover { color: #c9d1d9; }
     .tab.active { color: #58a6ff; border-bottom-color: #1f6feb; }
-    .tab-content { display: none; padding: 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .tab-content { display: none; padding: 1.5rem; max-width: 900px; margin: 0 auto; }
     .tab-content.active { display: block; }
     table { width: 100%; border-collapse: collapse; font-size: 0.93rem; }
     thead tr { background: #161b22; }
     th { padding: 0.65rem 0.75rem; text-align: center; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #8b949e; border-bottom: 2px solid #21262d; white-space: nowrap; }
     th.left { text-align: left; }
-    td { padding: 0.65rem 0.75rem; border-bottom: 1px solid #21262d; }
+    td { padding: 0.7rem 0.75rem; border-bottom: 1px solid #21262d; }
     tbody tr:hover td { background: #1c2128; }
     tbody tr:last-child td { border-bottom: none; }
     .num { text-align: center; color: #c9d1d9; }
@@ -28,14 +28,51 @@
     .pts { text-align: center; font-weight: 700; color: #58a6ff; }
     .pos { color: #3fb950; font-weight: 600; }
     .neg { color: #f85149; font-weight: 600; }
-    .countries { text-align: left; font-size: 0.78rem; color: #8b949e; line-height: 1.5; }
     .updated { text-align: center; color: #484f58; font-size: 0.78rem; padding: 2rem 1rem; border-top: 1px solid #21262d; margin-top: 1rem; }
-    .badge { display: inline-block; background: #1f6feb22; color: #58a6ff; border: 1px solid #1f6feb55; border-radius: 4px; padding: 0.1rem 0.4rem; font-size: 0.7rem; font-weight: 700; margin-left: 0.4rem; vertical-align: middle; }
+    .rnum { color: #8b949e; font-size: 0.85rem; }
+
+    /* Podium rows */
+    tr.gold td { background: linear-gradient(90deg, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0.02) 60%, transparent 100%); }
+    tr.silver td { background: linear-gradient(90deg, rgba(192,192,192,0.08) 0%, rgba(192,192,192,0.01) 60%, transparent 100%); }
+    tr.bronze td { background: linear-gradient(90deg, rgba(205,127,50,0.1) 0%, rgba(205,127,50,0.02) 60%, transparent 100%); }
+    tr.gold td:first-child { border-left: 3px solid #ffd700; }
+    tr.silver td:first-child { border-left: 3px solid #c0c0c0; }
+    tr.bronze td:first-child { border-left: 3px solid #cd7f32; }
+    tr.gold:hover td, tr.silver:hover td, tr.bronze:hover td { filter: brightness(1.2); }
+    .medal-cell { font-size: 1.2rem; text-align: center; }
+
+    /* Clickable team name */
+    .team-link { cursor: pointer; color: #e6edf3 !important; }
+    .team-link:hover { color: #58a6ff !important; text-decoration: underline; }
+    tr.gold .team-link { color: #ffd700 !important; font-weight: 700; }
+    tr.silver .team-link { color: #c0c0c0 !important; font-weight: 700; }
+    tr.bronze .team-link { color: #cd7f32 !important; font-weight: 700; }
+    tr.gold:hover .team-link, tr.silver:hover .team-link, tr.bronze:hover .team-link { text-decoration: underline; }
+
+    /* Modal */
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+    .overlay.open { display: flex; }
+    .modal { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 1.5rem; width: 92%; max-width: 420px; max-height: 88vh; overflow-y: auto; animation: pop 0.18s ease; }
+    @keyframes pop { from { opacity:0; transform:scale(0.93) translateY(8px); } to { opacity:1; transform:scale(1) translateY(0); } }
+    .modal-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.2rem; }
+    .modal-title { font-size: 1.05rem; font-weight: 700; line-height: 1.3; padding-right: 1rem; }
+    .modal-close { background: #21262d; border: none; color: #8b949e; width: 28px; height: 28px; border-radius: 50%; font-size: 1rem; cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .modal-close:hover { background: #30363d; color: #e6edf3; }
+    .country-row { display: flex; justify-content: space-between; align-items: center; padding: 0.55rem 0; border-bottom: 1px solid #21262d; gap: 0.5rem; }
+    .country-row:last-of-type { border-bottom: none; }
+    .c-name { font-size: 0.9rem; color: #c9d1d9; }
+    .c-pts { font-size: 0.85rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 5px; min-width: 40px; text-align: center; }
+    .c-pts.hi { color: #3fb950; background: rgba(63,185,80,0.12); }
+    .c-pts.mid { color: #d29922; background: rgba(210,153,34,0.12); }
+    .c-pts.lo { color: #6e7681; background: rgba(110,118,129,0.1); }
+    .modal-total { display: flex; justify-content: space-between; align-items: center; padding-top: 0.9rem; margin-top: 0.5rem; border-top: 2px solid #30363d; font-weight: 700; font-size: 1rem; }
+    .modal-total span:last-child { color: #58a6ff; font-size: 1.2rem; }
+
     @media (max-width: 640px) {
       .sm { display: none; }
       header h1 { font-size: 1.4rem; }
-      .tab { padding: 0.75rem 1rem; font-size: 0.85rem; }
-      .tab-content { padding: 1rem 0.5rem; }
+      .tab { padding: 0.75rem 0.9rem; font-size: 0.85rem; }
+      .tab-content { padding: 0.75rem 0.25rem; }
       td, th { padding: 0.55rem 0.4rem; }
     }
   </style>
@@ -48,23 +85,16 @@
 
   <div class="tabs">
     <div class="tab active" onclick="switchTab('country', this)">&#127758; Country Standings</div>
-    <div class="tab" onclick="switchTab('fantasy', this)">&#127942; Fantasy Standings</div>
+    <div class="tab" onclick="switchTab('fantasy', this)">&#127942; Standings</div>
   </div>
 
   <div id="country" class="tab-content active">
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th class="left">Country</th>
-          <th class="sm">GP</th>
-          <th>W</th>
-          <th class="sm">D</th>
-          <th class="sm">L</th>
-          <th class="sm">GF</th>
-          <th class="sm">GA</th>
-          <th>GD</th>
-          <th>Pts</th>
+          <th>#</th><th class="left">Country</th>
+          <th class="sm">GP</th><th>W</th><th class="sm">D</th><th class="sm">L</th>
+          <th class="sm">GF</th><th class="sm">GA</th><th>GD</th><th>Pts</th>
         </tr>
       </thead>
       <tbody>
@@ -652,368 +682,356 @@
     <table>
       <thead>
         <tr>
-          <th>#</th>
-          <th class="left">Team</th>
-          <th>Pts</th>
-          <th class="left sm">Countries &amp; Points</th>
+          <th>#</th><th class="left">Team</th><th>Pts</th>
         </tr>
       </thead>
       <tbody>
-            <tr>
-              <td class="num">1</td>
-              <td class="name">Heim's Dimes</td>
+            <tr class="gold">
+              <td class="num medal-cell">&#127945;</td>
+              <td class="name team-link" data-team="Heim's Dimes">Heim's Dimes</td>
               <td class="pts">40</td>
-              <td class="countries sm">France (3), Morocco (4), Germany (6), Mexico (6), Japan (4), South Korea (3), Canada (4), Paraguay (3), Scotland (3), Qatar (1), Cape Verde (2), Curaçao (1)</td>
             </tr>
-            <tr>
-              <td class="num">2</td>
-              <td class="name">Arbitrage United FC</td>
+            <tr class="silver">
+              <td class="num medal-cell">&#129352;</td>
+              <td class="name team-link" data-team="Arbitrage United FC">Arbitrage United FC</td>
               <td class="pts">39</td>
-              <td class="countries sm">Argentina (6), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Norway (3), Ivory Coast (3), Czechia (1), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">3</td>
-              <td class="name">MJ's Team</td>
+            <tr class="bronze">
+              <td class="num medal-cell">&#129353;</td>
+              <td class="name team-link" data-team="MJ's Team">MJ's Team</td>
               <td class="pts">39</td>
-              <td class="countries sm">Spain (4), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Ivory Coast (3), Scotland (3), Uzbekistan (0), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">4</td>
-              <td class="name">The Heeters</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">4</span></td>
+              <td class="name team-link" data-team="The Heeters">The Heeters</td>
               <td class="pts">39</td>
-              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Ivory Coast (3), Scotland (3), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">5</td>
-              <td class="name">And It Was All Yellow... Cards</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">5</span></td>
+              <td class="name team-link" data-team="And It Was All Yellow... Cards">And It Was All Yellow... Cards</td>
               <td class="pts">38</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Austria (3), Norway (3), Paraguay (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">6</td>
-              <td class="name">Road to Glory</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">6</span></td>
+              <td class="name team-link" data-team="Road to Glory">Road to Glory</td>
               <td class="pts">38</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), United States (6), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">7</td>
-              <td class="name">Oliver's Army</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">7</span></td>
+              <td class="name team-link" data-team="Oliver's Army">Oliver's Army</td>
               <td class="pts">37</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">8</td>
-              <td class="name">I don't know football</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">8</span></td>
+              <td class="name team-link" data-team="I don't know football">I don't know football</td>
               <td class="pts">37</td>
-              <td class="countries sm">Argentina (6), Portugal (1), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Canada (4), Paraguay (3), Congo DR (1), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">9</td>
-              <td class="name">GAM FC</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">9</span></td>
+              <td class="name team-link" data-team="GAM FC">GAM FC</td>
               <td class="pts">36</td>
-              <td class="countries sm">England (3), Portugal (1), Germany (6), Mexico (6), Japan (4), Australia (3), Canada (4), Paraguay (3), Scotland (3), Uzbekistan (0), Jordan (0), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">10</td>
-              <td class="name">Led_Zep</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">10</span></td>
+              <td class="name team-link" data-team="Led_Zep">Led_Zep</td>
               <td class="pts">36</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Japan (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">11</td>
-              <td class="name">Italy should have been here</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">11</span></td>
+              <td class="name team-link" data-team="Italy should have been here">Italy should have been here</td>
               <td class="pts">36</td>
-              <td class="countries sm">Spain (4), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">12</td>
-              <td class="name">GAM Digital</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">12</span></td>
+              <td class="name team-link" data-team="GAM Digital">GAM Digital</td>
               <td class="pts">36</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), United States (6), Japan (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">13</td>
-              <td class="name">Spain</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">13</span></td>
+              <td class="name team-link" data-team="Spain">Spain</td>
               <td class="pts">36</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Japan (4), Ecuador (1), Norway (3), Paraguay (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">14</td>
-              <td class="name">Toronto Inferno</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">14</span></td>
+              <td class="name team-link" data-team="Toronto Inferno">Toronto Inferno</td>
               <td class="pts">36</td>
-              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Mexico (6), Japan (4), Ecuador (1), Canada (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Cape Verde (2), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">15</td>
-              <td class="name">Shai Gorgeous</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">15</span></td>
+              <td class="name team-link" data-team="Shai Gorgeous">Shai Gorgeous</td>
               <td class="pts">35</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Switzerland (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">16</td>
-              <td class="name">Team Matthew</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">16</span></td>
+              <td class="name team-link" data-team="Team Matthew">Team Matthew</td>
               <td class="pts">35</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), United States (6), Switzerland (4), South Korea (3), Norway (3), Sweden (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">17</td>
-              <td class="name">Pelley FC 2</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">17</span></td>
+              <td class="name team-link" data-team="Pelley FC 2">Pelley FC 2</td>
               <td class="pts">35</td>
-              <td class="countries sm">France (3), Netherlands (4), Germany (6), Uruguay (2), Switzerland (4), Austria (3), Egypt (4), Ivory Coast (3), Congo DR (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">18</td>
-              <td class="name">Milos Vukovic</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">18</span></td>
+              <td class="name team-link" data-team="Milos Vukovic">Milos Vukovic</td>
               <td class="pts">34</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Mexico (6), Switzerland (4), Ecuador (1), Norway (3), Ivory Coast (3), Tunisia (0), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">19</td>
-              <td class="name">Shai Gorgeous Alexander</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">19</span></td>
+              <td class="name team-link" data-team="Shai Gorgeous Alexander">Shai Gorgeous Alexander</td>
               <td class="pts">34</td>
-              <td class="countries sm">England (3), Portugal (1), Germany (6), United States (6), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">20</td>
-              <td class="name">Andrew Hakes</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">20</span></td>
+              <td class="name team-link" data-team="Andrew Hakes">Andrew Hakes</td>
               <td class="pts">33</td>
-              <td class="countries sm">England (3), Brazil (4), Colombia (3), Mexico (6), Iran (2), South Korea (3), Canada (4), Ivory Coast (3), Congo DR (1), South Africa (1), Jordan (0), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">21</td>
-              <td class="name">True Be-Leaf-ers</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">21</span></td>
+              <td class="name team-link" data-team="True Be-Leaf-ers">True Be-Leaf-ers</td>
               <td class="pts">33</td>
-              <td class="countries sm">France (3), Brazil (4), Belgium (2), Uruguay (2), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Scotland (3), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">22</td>
-              <td class="name">WhatDoesOffsideEvenMean?</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">22</span></td>
+              <td class="name team-link" data-team="WhatDoesOffsideEvenMean?">WhatDoesOffsideEvenMean?</td>
               <td class="pts">33</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Japan (4), Ecuador (1), Norway (3), Ivory Coast (3), Scotland (3), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">23</td>
-              <td class="name">Fake It Till You Jake It</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">23</span></td>
+              <td class="name team-link" data-team="Fake It Till You Jake It">Fake It Till You Jake It</td>
               <td class="pts">33</td>
-              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Senegal (0), Japan (4), South Korea (3), Egypt (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">24</td>
-              <td class="name">Les Rouges 2</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">24</span></td>
+              <td class="name team-link" data-team="Les Rouges 2">Les Rouges 2</td>
               <td class="pts">32</td>
-              <td class="countries sm">France (3), Brazil (4), Colombia (3), Uruguay (2), Japan (4), Austria (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">25</td>
-              <td class="name">Canada</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">25</span></td>
+              <td class="name team-link" data-team="Canada">Canada</td>
               <td class="pts">32</td>
-              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), United States (6), Switzerland (4), Austria (3), Canada (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">26</td>
-              <td class="name">Dave W's Team</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">26</span></td>
+              <td class="name team-link" data-team="Dave W's Team">Dave W's Team</td>
               <td class="pts">32</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">27</td>
-              <td class="name">Pelley FC 1</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">27</span></td>
+              <td class="name team-link" data-team="Pelley FC 1">Pelley FC 1</td>
               <td class="pts">31</td>
-              <td class="countries sm">England (3), Portugal (1), Germany (6), Mexico (6), Türkiye (0), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">28</td>
-              <td class="name">Les Rouges 1</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">28</span></td>
+              <td class="name team-link" data-team="Les Rouges 1">Les Rouges 1</td>
               <td class="pts">31</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Senegal (0), Switzerland (4), Austria (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">29</td>
-              <td class="name">Big Dawgz</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">29</span></td>
+              <td class="name team-link" data-team="Big Dawgz">Big Dawgz</td>
               <td class="pts">31</td>
-              <td class="countries sm">France (3), Portugal (1), Germany (6), Uruguay (2), Japan (4), South Korea (3), Norway (3), Sweden (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">30</td>
-              <td class="name">Saqib Shamasdin</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">30</span></td>
+              <td class="name team-link" data-team="Saqib Shamasdin">Saqib Shamasdin</td>
               <td class="pts">31</td>
-              <td class="countries sm">France (3), Portugal (1), Belgium (2), United States (6), Japan (4), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">31</td>
-              <td class="name">JHoyle21</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">31</span></td>
+              <td class="name team-link" data-team="JHoyle21">JHoyle21</td>
               <td class="pts">31</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Scotland (3), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">32</td>
-              <td class="name">Aaron Ma</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">32</span></td>
+              <td class="name team-link" data-team="Aaron Ma">Aaron Ma</td>
               <td class="pts">30</td>
-              <td class="countries sm">France (3), Portugal (1), Germany (6), Mexico (6), Türkiye (0), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), Iraq (0), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">33</td>
-              <td class="name">Outperformance</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">33</span></td>
+              <td class="name team-link" data-team="Outperformance">Outperformance</td>
               <td class="pts">30</td>
-              <td class="countries sm">France (3), Portugal (1), Germany (6), Mexico (6), Switzerland (4), South Korea (3), Algeria (0), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">34</td>
-              <td class="name">Big Dawgz 2</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">34</span></td>
+              <td class="name team-link" data-team="Big Dawgz 2">Big Dawgz 2</td>
               <td class="pts">30</td>
-              <td class="countries sm">France (3), Portugal (1), Colombia (3), Mexico (6), Japan (4), Ecuador (1), Canada (4), Ivory Coast (3), Congo DR (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">35</td>
-              <td class="name">Gunners FC</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">35</span></td>
+              <td class="name team-link" data-team="Gunners FC">Gunners FC</td>
               <td class="pts">30</td>
-              <td class="countries sm">England (3), Portugal (1), Germany (6), Senegal (0), Switzerland (4), Ecuador (1), Egypt (4), Sweden (3), Scotland (3), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">36</td>
-              <td class="name">Party of 5</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">36</span></td>
+              <td class="name team-link" data-team="Party of 5">Party of 5</td>
               <td class="pts">30</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Switzerland (4), South Korea (3), Norway (3), Sweden (3), Czechia (1), South Africa (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">37</td>
-              <td class="name">Capital Gains FC</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">37</span></td>
+              <td class="name team-link" data-team="Capital Gains FC">Capital Gains FC</td>
               <td class="pts">30</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Japan (4), South Korea (3), Algeria (0), Ivory Coast (3), Czechia (1), Uzbekistan (0), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">38</td>
-              <td class="name">ROI naldo</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">38</span></td>
+              <td class="name team-link" data-team="ROI naldo">ROI naldo</td>
               <td class="pts">30</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Uruguay (2), Japan (4), Ecuador (1), Algeria (0), Ivory Coast (3), Scotland (3), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">39</td>
-              <td class="name">Competitive Intelligence</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">39</span></td>
+              <td class="name team-link" data-team="Competitive Intelligence">Competitive Intelligence</td>
               <td class="pts">30</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Japan (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Qatar (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">40</td>
-              <td class="name">Project 2026</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">40</span></td>
+              <td class="name team-link" data-team="Project 2026">Project 2026</td>
               <td class="pts">30</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Japan (4), Austria (3), Norway (3), Paraguay (3), Czechia (1), Uzbekistan (0), Jordan (0), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">41</td>
-              <td class="name">Team Chicken Dinner</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">41</span></td>
+              <td class="name team-link" data-team="Team Chicken Dinner">Team Chicken Dinner</td>
               <td class="pts">29</td>
-              <td class="countries sm">France (3), Portugal (1), Croatia (0), Mexico (6), Switzerland (4), Australia (3), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">42</td>
-              <td class="name">E(xtremely) T(alented) F(ootballer)s</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">42</span></td>
+              <td class="name team-link" data-team="E(xtremely) T(alented) F(ootballer)s">E(xtremely) T(alented) F(ootballer)s</td>
               <td class="pts">29</td>
-              <td class="countries sm">Spain (4), Portugal (1), Colombia (3), Senegal (0), Japan (4), Austria (3), Canada (4), Ivory Coast (3), Scotland (3), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">43</td>
-              <td class="name">Balham FC</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">43</span></td>
+              <td class="name team-link" data-team="Balham FC">Balham FC</td>
               <td class="pts">29</td>
-              <td class="countries sm">France (3), Portugal (1), Germany (6), Senegal (0), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Uzbekistan (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">44</td>
-              <td class="name">Team Dreyer</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">44</span></td>
+              <td class="name team-link" data-team="Team Dreyer">Team Dreyer</td>
               <td class="pts">29</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Mexico (6), Türkiye (0), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Qatar (1), Jordan (0), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">45</td>
-              <td class="name">France</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">45</span></td>
+              <td class="name team-link" data-team="France">France</td>
               <td class="pts">29</td>
-              <td class="countries sm">France (3), Portugal (1), Colombia (3), Uruguay (2), Japan (4), South Korea (3), Canada (4), Paraguay (3), Czechia (1), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">46</td>
-              <td class="name">Bryant Spivak</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">46</span></td>
+              <td class="name team-link" data-team="Bryant Spivak">Bryant Spivak</td>
               <td class="pts">29</td>
-              <td class="countries sm">France (3), Brazil (4), Germany (6), Mexico (6), Türkiye (0), Ecuador (1), Norway (3), Ivory Coast (3), Czechia (1), South Africa (1), Jordan (0), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">47</td>
-              <td class="name">Performance</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">47</span></td>
+              <td class="name team-link" data-team="Performance">Performance</td>
               <td class="pts">29</td>
-              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), Uruguay (2), Japan (4), South Korea (3), Canada (4), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">48</td>
-              <td class="name">Emerging Market Maestro's</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">48</span></td>
+              <td class="name team-link" data-team="Emerging Market Maestro's">Emerging Market Maestro's</td>
               <td class="pts">29</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Senegal (0), Japan (4), Ecuador (1), Norway (3), Ivory Coast (3), Scotland (3), Iraq (0), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">49</td>
-              <td class="name">Benchmark</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">49</span></td>
+              <td class="name team-link" data-team="Benchmark">Benchmark</td>
               <td class="pts">29</td>
-              <td class="countries sm">Spain (4), Netherlands (4), Germany (6), Senegal (0), Iran (2), South Korea (3), Norway (3), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">50</td>
-              <td class="name">Portugal 1966</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">50</span></td>
+              <td class="name team-link" data-team="Portugal 1966">Portugal 1966</td>
               <td class="pts">28</td>
-              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), United States (6), Türkiye (0), Austria (3), Norway (3), Ivory Coast (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">51</td>
-              <td class="name">Italy</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">51</span></td>
+              <td class="name team-link" data-team="Italy">Italy</td>
               <td class="pts">27</td>
-              <td class="countries sm">France (3), Portugal (1), Germany (6), Uruguay (2), Türkiye (0), Austria (3), Norway (3), Sweden (3), Scotland (3), South Africa (1), Bosnia-Herzegovina (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">52</td>
-              <td class="name">The Mainoo Event</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">52</span></td>
+              <td class="name team-link" data-team="The Mainoo Event">The Mainoo Event</td>
               <td class="pts">27</td>
-              <td class="countries sm">Spain (4), Portugal (1), Belgium (2), Mexico (6), Türkiye (0), Ecuador (1), Norway (3), Ivory Coast (3), Scotland (3), Iraq (0), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">53</td>
-              <td class="name">Berserkers</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">53</span></td>
+              <td class="name team-link" data-team="Berserkers">Berserkers</td>
               <td class="pts">27</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), Uruguay (2), Switzerland (4), Ecuador (1), Norway (3), Sweden (3), Czechia (1), Uzbekistan (0), Saudi Arabia (1), New Zealand (1)</td>
             </tr>
-            <tr>
-              <td class="num">54</td>
-              <td class="name">Gov Bonds Intern</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">54</span></td>
+              <td class="name team-link" data-team="Gov Bonds Intern">Gov Bonds Intern</td>
               <td class="pts">27</td>
-              <td class="countries sm">Spain (4), Portugal (1), Germany (6), United States (6), Türkiye (0), Ecuador (1), Algeria (0), Sweden (3), Czechia (1), Qatar (1), Bosnia-Herzegovina (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">55</td>
-              <td class="name">Team Chicken Dinner (vibes)</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">55</span></td>
+              <td class="name team-link" data-team="Team Chicken Dinner (vibes)">Team Chicken Dinner (vibes)</td>
               <td class="pts">27</td>
-              <td class="countries sm">Spain (4), Morocco (4), Belgium (2), Senegal (0), Japan (4), South Korea (3), Canada (4), Panama (0), Czechia (1), Uzbekistan (0), Cape Verde (2), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">56</td>
-              <td class="name">Christine Ramsay</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">56</span></td>
+              <td class="name team-link" data-team="Christine Ramsay">Christine Ramsay</td>
               <td class="pts">27</td>
-              <td class="countries sm">Spain (4), Morocco (4), Croatia (0), Mexico (6), Japan (4), Ecuador (1), Algeria (0), Paraguay (3), Tunisia (0), South Africa (1), Saudi Arabia (1), Ghana (3)</td>
             </tr>
-            <tr>
-              <td class="num">57</td>
-              <td class="name">Turkey4TheWin</td>
+            <tr class="">
+              <td class="num medal-cell"><span class="rnum">57</span></td>
+              <td class="name team-link" data-team="Turkey4TheWin">Turkey4TheWin</td>
               <td class="pts">23</td>
-              <td class="countries sm">Spain (4), Brazil (4), Germany (6), Senegal (0), Türkiye (0), Ecuador (1), Norway (3), Ivory Coast (3), Tunisia (0), South Africa (1), Jordan (0), New Zealand (1)</td>
             </tr>
       </tbody>
     </table>
   </div>
 
-  <p class="updated">Last updated: June 22, 2026 at 19:33 UTC &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: Winner=2pts, Loser=1pt</p>
+  <p class="updated">Last updated: June 22, 2026 at 19:49 UTC &nbsp;&bull;&nbsp; Win=3pts &nbsp;&bull;&nbsp; Draw=1pt &nbsp;&bull;&nbsp; Penalties: W=2pts / L=1pt &nbsp;&bull;&nbsp; Click a team to see their picks</p>
+
+  <!-- Modal -->
+  <div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+    <div class="modal" id="modal">
+      <div class="modal-head">
+        <div class="modal-title" id="modal-title"></div>
+        <button class="modal-close" onclick="closeModal()">&#x2715;</button>
+      </div>
+      <div id="modal-body"></div>
+      <div class="modal-total">
+        <span>Total Points</span>
+        <span id="modal-total"></span>
+      </div>
+    </div>
+  </div>
 
   <script>
+    const TEAM_DATA = {"Heim's Dimes": [["France", 3], ["Morocco", 4], ["Germany", 6], ["Mexico", 6], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Paraguay", 3], ["Scotland", 3], ["Qatar", 1], ["Cape Verde", 2], ["Curaçao", 1]], "Arbitrage United FC": [["Argentina", 6], ["Brazil", 4], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "MJ's Team": [["Spain", 4], ["Brazil", 4], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Canada", 4], ["Ivory Coast", 3], ["Scotland", 3], ["Uzbekistan", 0], ["Saudi Arabia", 1], ["Ghana", 3]], "The Heeters": [["Spain", 4], ["Netherlands", 4], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Canada", 4], ["Ivory Coast", 3], ["Scotland", 3], ["Iraq", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "And It Was All Yellow... Cards": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Austria", 3], ["Norway", 3], ["Paraguay", 3], ["Czechia", 1], ["Qatar", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Road to Glory": [["France", 3], ["Brazil", 4], ["Germany", 6], ["United States", 6], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Oliver's Army": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Canada", 4], ["Sweden", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "I don't know football": [["Argentina", 6], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Canada", 4], ["Paraguay", 3], ["Congo DR", 1], ["South Africa", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "GAM FC": [["England", 3], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Japan", 4], ["Australia", 3], ["Canada", 4], ["Paraguay", 3], ["Scotland", 3], ["Uzbekistan", 0], ["Jordan", 0], ["Ghana", 3]], "Led_Zep": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Japan", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Italy should have been here": [["Spain", 4], ["Brazil", 4], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Iraq", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "GAM Digital": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["United States", 6], ["Japan", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Spain": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Japan", 4], ["Ecuador", 1], ["Norway", 3], ["Paraguay", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Toronto Inferno": [["Spain", 4], ["Netherlands", 4], ["Germany", 6], ["Mexico", 6], ["Japan", 4], ["Ecuador", 1], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Cape Verde", 2], ["New Zealand", 1]], "Shai Gorgeous": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["South Korea", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "Team Matthew": [["France", 3], ["Brazil", 4], ["Germany", 6], ["United States", 6], ["Switzerland", 4], ["South Korea", 3], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "Pelley FC 2": [["France", 3], ["Netherlands", 4], ["Germany", 6], ["Uruguay", 2], ["Switzerland", 4], ["Austria", 3], ["Egypt", 4], ["Ivory Coast", 3], ["Congo DR", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Milos Vukovic": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Tunisia", 0], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Shai Gorgeous Alexander": [["England", 3], ["Portugal", 1], ["Germany", 6], ["United States", 6], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "Andrew Hakes": [["England", 3], ["Brazil", 4], ["Colombia", 3], ["Mexico", 6], ["Iran", 2], ["South Korea", 3], ["Canada", 4], ["Ivory Coast", 3], ["Congo DR", 1], ["South Africa", 1], ["Jordan", 0], ["Ghana", 3]], "True Be-Leaf-ers": [["France", 3], ["Brazil", 4], ["Belgium", 2], ["Uruguay", 2], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Ivory Coast", 3], ["Scotland", 3], ["South Africa", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "WhatDoesOffsideEvenMean?": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Uruguay", 2], ["Japan", 4], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Scotland", 3], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Fake It Till You Jake It": [["Spain", 4], ["Netherlands", 4], ["Germany", 6], ["Senegal", 0], ["Japan", 4], ["South Korea", 3], ["Egypt", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Les Rouges 2": [["France", 3], ["Brazil", 4], ["Colombia", 3], ["Uruguay", 2], ["Japan", 4], ["Austria", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Canada": [["Spain", 4], ["Portugal", 1], ["Belgium", 2], ["United States", 6], ["Switzerland", 4], ["Austria", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Dave W's Team": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Uruguay", 2], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Pelley FC 1": [["England", 3], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Türkiye", 0], ["South Korea", 3], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["South Africa", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Les Rouges 1": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Senegal", 0], ["Switzerland", 4], ["Austria", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Big Dawgz": [["France", 3], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Japan", 4], ["South Korea", 3], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Qatar", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Saqib Shamasdin": [["France", 3], ["Portugal", 1], ["Belgium", 2], ["United States", 6], ["Japan", 4], ["South Korea", 3], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "JHoyle21": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Scotland", 3], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Aaron Ma": [["France", 3], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Türkiye", 0], ["South Korea", 3], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["Iraq", 0], ["Saudi Arabia", 1], ["Ghana", 3]], "Outperformance": [["France", 3], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Switzerland", 4], ["South Korea", 3], ["Algeria", 0], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "Big Dawgz 2": [["France", 3], ["Portugal", 1], ["Colombia", 3], ["Mexico", 6], ["Japan", 4], ["Ecuador", 1], ["Canada", 4], ["Ivory Coast", 3], ["Congo DR", 1], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Gunners FC": [["England", 3], ["Portugal", 1], ["Germany", 6], ["Senegal", 0], ["Switzerland", 4], ["Ecuador", 1], ["Egypt", 4], ["Sweden", 3], ["Scotland", 3], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Party of 5": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Switzerland", 4], ["South Korea", 3], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "Capital Gains FC": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Uruguay", 2], ["Japan", 4], ["South Korea", 3], ["Algeria", 0], ["Ivory Coast", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Saudi Arabia", 1], ["Ghana", 3]], "ROI naldo": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Uruguay", 2], ["Japan", 4], ["Ecuador", 1], ["Algeria", 0], ["Ivory Coast", 3], ["Scotland", 3], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Competitive Intelligence": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Japan", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Qatar", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Project 2026": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Japan", 4], ["Austria", 3], ["Norway", 3], ["Paraguay", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Jordan", 0], ["Ghana", 3]], "Team Chicken Dinner": [["France", 3], ["Portugal", 1], ["Croatia", 0], ["Mexico", 6], ["Switzerland", 4], ["Australia", 3], ["Norway", 3], ["Sweden", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "E(xtremely) T(alented) F(ootballer)s": [["Spain", 4], ["Portugal", 1], ["Colombia", 3], ["Senegal", 0], ["Japan", 4], ["Austria", 3], ["Canada", 4], ["Ivory Coast", 3], ["Scotland", 3], ["Iraq", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Balham FC": [["France", 3], ["Portugal", 1], ["Germany", 6], ["Senegal", 0], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Team Dreyer": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Mexico", 6], ["Türkiye", 0], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Qatar", 1], ["Jordan", 0], ["Ghana", 3]], "France": [["France", 3], ["Portugal", 1], ["Colombia", 3], ["Uruguay", 2], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Paraguay", 3], ["Czechia", 1], ["South Africa", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Bryant Spivak": [["France", 3], ["Brazil", 4], ["Germany", 6], ["Mexico", 6], ["Türkiye", 0], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["South Africa", 1], ["Jordan", 0], ["New Zealand", 1]], "Performance": [["Spain", 4], ["Portugal", 1], ["Belgium", 2], ["Uruguay", 2], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Emerging Market Maestro's": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Senegal", 0], ["Japan", 4], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Scotland", 3], ["Iraq", 0], ["Saudi Arabia", 1], ["Ghana", 3]], "Benchmark": [["Spain", 4], ["Netherlands", 4], ["Germany", 6], ["Senegal", 0], ["Iran", 2], ["South Korea", 3], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "Portugal 1966": [["Spain", 4], ["Portugal", 1], ["Belgium", 2], ["United States", 6], ["Türkiye", 0], ["Austria", 3], ["Norway", 3], ["Ivory Coast", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Italy": [["France", 3], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Türkiye", 0], ["Austria", 3], ["Norway", 3], ["Sweden", 3], ["Scotland", 3], ["South Africa", 1], ["Bosnia-Herzegovina", 1], ["New Zealand", 1]], "The Mainoo Event": [["Spain", 4], ["Portugal", 1], ["Belgium", 2], ["Mexico", 6], ["Türkiye", 0], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Scotland", 3], ["Iraq", 0], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Berserkers": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["Uruguay", 2], ["Switzerland", 4], ["Ecuador", 1], ["Norway", 3], ["Sweden", 3], ["Czechia", 1], ["Uzbekistan", 0], ["Saudi Arabia", 1], ["New Zealand", 1]], "Gov Bonds Intern": [["Spain", 4], ["Portugal", 1], ["Germany", 6], ["United States", 6], ["Türkiye", 0], ["Ecuador", 1], ["Algeria", 0], ["Sweden", 3], ["Czechia", 1], ["Qatar", 1], ["Bosnia-Herzegovina", 1], ["Ghana", 3]], "Team Chicken Dinner (vibes)": [["Spain", 4], ["Morocco", 4], ["Belgium", 2], ["Senegal", 0], ["Japan", 4], ["South Korea", 3], ["Canada", 4], ["Panama", 0], ["Czechia", 1], ["Uzbekistan", 0], ["Cape Verde", 2], ["Ghana", 3]], "Christine Ramsay": [["Spain", 4], ["Morocco", 4], ["Croatia", 0], ["Mexico", 6], ["Japan", 4], ["Ecuador", 1], ["Algeria", 0], ["Paraguay", 3], ["Tunisia", 0], ["South Africa", 1], ["Saudi Arabia", 1], ["Ghana", 3]], "Turkey4TheWin": [["Spain", 4], ["Brazil", 4], ["Germany", 6], ["Senegal", 0], ["Türkiye", 0], ["Ecuador", 1], ["Norway", 3], ["Ivory Coast", 3], ["Tunisia", 0], ["South Africa", 1], ["Jordan", 0], ["New Zealand", 1]]};
+
     function switchTab(name, el) {
-      document.querySelectorAll('.tab-content').forEach(function(t) { t.classList.remove('active'); });
-      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.getElementById(name).classList.add('active');
       el.classList.add('active');
     }
+
+    function showTeam(teamName) {
+      const data = TEAM_DATA[teamName];
+      if (!data) return;
+      document.getElementById('modal-title').textContent = teamName;
+      const sorted = [...data].sort((a, b) => b[1] - a[1]);
+      let total = 0;
+      let html = '';
+      sorted.forEach(([country, pts]) => {
+        total += pts;
+        const cls = pts >= 3 ? 'hi' : pts >= 1 ? 'mid' : 'lo';
+        html += `<div class="country-row"><span class="c-name">${country}</span><span class="c-pts ${cls}">${pts} pts</span></div>`;
+      });
+      document.getElementById('modal-body').innerHTML = html;
+      document.getElementById('modal-total').textContent = total + ' pts';
+      document.getElementById('overlay').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('overlay').classList.remove('open');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('overlay')) closeModal();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    document.querySelectorAll('.team-link').forEach(el => {
+      el.addEventListener('click', () => showTeam(el.dataset.team));
+    });
   </script>
 </body>
 </html>
