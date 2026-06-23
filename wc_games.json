@@ -471,5 +471,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760455": {
+    "id": "760455",
+    "date": "2026-06-23",
+    "home": "Jordan",
+    "away": "Algeria",
+    "home_score": 1,
+    "away_score": 2,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
