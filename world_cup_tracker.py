@@ -82,6 +82,61 @@ FANTASY_TEAMS = {
 }
 
 
+# 2026 World Cup group compositions (inferred from match schedule)
+WC_GROUPS = [
+    ["Mexico", "South Africa", "South Korea", "Czechia"],
+    ["Canada", "Bosnia-Herzegovina", "Qatar", "Switzerland"],
+    ["United States", "Paraguay", "Australia", "Türkiye"],
+    ["Brazil", "Morocco", "Haiti", "Scotland"],
+    ["Netherlands", "Japan", "Sweden", "Tunisia"],
+    ["Germany", "Curaçao", "Ivory Coast", "Ecuador"],
+    ["Spain", "Saudi Arabia", "Uruguay", "Cape Verde"],
+    ["Belgium", "Iran", "Egypt", "New Zealand"],
+    ["Argentina", "Algeria", "Austria", "Jordan"],
+    ["France", "Senegal", "Iraq", "Norway"],
+    ["England", "Croatia", "Portugal", "Congo DR"],
+    ["Ghana", "Panama", "Uzbekistan", "Colombia"],
+]
+
+
+def get_eliminated_teams(standings, games):
+    """Returns set of team names that have been eliminated from the tournament."""
+    eliminated = set()
+    third_place = []
+
+    for group in WC_GROUPS:
+        group_data = [(t, standings.get(t, {"GP": 0, "Pts": 0, "GD": 0, "GF": 0})) for t in group]
+        if min(d["GP"] for _, d in group_data) < 3:
+            continue  # Group stage not finished yet
+        ranked = sorted(group_data, key=lambda x: (-x[1]["Pts"], -x[1]["GD"], -x[1]["GF"]))
+        eliminated.add(ranked[3][0])  # 4th place always out
+        t3 = ranked[2]
+        third_place.append((t3[1]["Pts"], t3[1]["GD"], t3[1]["GF"], t3[0]))
+
+    # Once all 12 groups finish, bottom 4 third-place teams are also out
+    if len(third_place) == 12:
+        third_place.sort(key=lambda x: (-x[0], -x[1], -x[2]))
+        for _, _, _, team in third_place[8:]:
+            eliminated.add(team)
+
+    # Knockout eliminations: team with GP > 3 that lost their most recent game
+    for team, data in standings.items():
+        if data["GP"] <= 3:
+            continue
+        team_games = sorted(
+            [g for g in games.values() if g["home"] == team or g["away"] == team],
+            key=lambda g: g["date"]
+        )
+        if not team_games:
+            continue
+        last = team_games[-1]
+        won = last["home_winner"] if last["home"] == team else last["away_winner"]
+        if not won:
+            eliminated.add(team)
+
+    return eliminated
+
+
 def load_games():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE) as f:
@@ -172,14 +227,19 @@ def build_standings(games):
     return teams
 
 
-def build_fantasy_standings(country_standings):
+def build_fantasy_standings(country_standings, games):
     country_pts = {name: data["Pts"] for name, data in country_standings.items()}
+    country_gp  = {name: data["GP"]  for name, data in country_standings.items()}
+    eliminated  = get_eliminated_teams(country_standings, games)
     rows = []
     for team_name, countries in FANTASY_TEAMS.items():
         country_data = [(c, country_pts.get(c, 0)) for c in countries]
-        total = sum(pts for _, pts in country_data)
+        total    = sum(pts for _, pts in country_data)
+        gp_total = sum(country_gp.get(c, 0) for c in countries)
+        alive    = sum(1 for c in countries if c not in eliminated)
         breakdown = ", ".join(f"{c} ({pts})" for c, pts in country_data)
-        rows.append({"Team": team_name, "Total Pts": total, "Countries": breakdown, "CountryData": country_data})
+        rows.append({"Team": team_name, "Total Pts": total, "GP": gp_total, "Alive": alive,
+                     "Countries": breakdown, "CountryData": country_data})
     rows.sort(key=lambda r: r["Total Pts"], reverse=True)
     for i, r in enumerate(rows, 1):
         r["Rank"] = i
@@ -220,11 +280,15 @@ def write_html(standings, fantasy_rows):
         medal_html = medals.get(rank, f'<span class="rnum">{rank}</span>')
         row_cls = podium_cls.get(rank, "")
         safe_team = r["Team"].replace("&", "&amp;")
+        alive = r["Alive"]
+        alive_cls = "alive-hi" if alive >= 10 else ("alive-mid" if alive >= 7 else "alive-lo")
         fantasy_rows_html += f"""
             <tr class="{row_cls}">
               <td class="num medal-cell">{medal_html}</td>
               <td class="name team-link" data-team="{safe_team}">{safe_team}</td>
               <td class="pts">{r['Total Pts']}</td>
+              <td class="num sm">{r['GP']}</td>
+              <td class="num {alive_cls}">{alive}/12</td>
             </tr>"""
 
     # Embed country data for popups
@@ -279,6 +343,9 @@ def write_html(standings, fantasy_rows):
     tr.silver .team-link {{ color: #c0c0c0 !important; font-weight: 700; }}
     tr.bronze .team-link {{ color: #cd7f32 !important; font-weight: 700; }}
     tr.gold:hover .team-link, tr.silver:hover .team-link, tr.bronze:hover .team-link {{ text-decoration: underline; }}
+    .alive-hi  {{ color: #3fb950; font-weight: 700; }}
+    .alive-mid {{ color: #d29922; font-weight: 700; }}
+    .alive-lo  {{ color: #f85149; font-weight: 700; }}
 
     /* Modal */
     .overlay {{ display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }}
@@ -369,7 +436,7 @@ def write_html(standings, fantasy_rows):
     <table>
       <thead>
         <tr>
-          <th>#</th><th class="left">Team</th><th>Pts</th>
+          <th>#</th><th class="left">Team</th><th>Pts</th><th class="sm">GP</th><th>Alive</th>
         </tr>
       </thead>
       <tbody>{fantasy_rows_html}
@@ -523,7 +590,7 @@ def write_excel(standings, fantasy_rows):
     df = pd.DataFrame(list(standings.values()), columns=cols)
     df = df.sort_values(["Pts", "GD", "GF"], ascending=False).reset_index(drop=True)
     df.insert(0, "Rank", range(1, len(df) + 1))
-    df2 = pd.DataFrame(fantasy_rows, columns=["Rank", "Team", "Total Pts", "Countries"])
+    df2 = pd.DataFrame(fantasy_rows, columns=["Rank", "Team", "Total Pts", "GP", "Alive", "Countries"])
 
     def style_sheet(ws, team_col=1):
         hf = PatternFill("solid", fgColor="1F4E79")
@@ -597,7 +664,7 @@ def main():
         print("No completed games found yet.")
         return
 
-    fantasy_rows = build_fantasy_standings(standings)
+    fantasy_rows = build_fantasy_standings(standings, games)
 
     write_html(standings, fantasy_rows)
 
