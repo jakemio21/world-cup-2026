@@ -137,6 +137,23 @@ def get_eliminated_teams(standings, games):
     return eliminated
 
 
+def get_todays_teams(today_date):
+    """Returns set of team names with any game scheduled today (any status)."""
+    try:
+        resp = requests.get(ESPN_URL, params={"dates": today_date.strftime("%Y%m%d")}, timeout=15)
+        resp.raise_for_status()
+        events = resp.json().get("events", [])
+    except Exception:
+        return set()
+    teams = set()
+    for event in events:
+        for comp in event.get("competitions", [{}])[0].get("competitors", []):
+            name = comp.get("team", {}).get("displayName", "")
+            if name:
+                teams.add(name)
+    return teams
+
+
 def load_games():
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE) as f:
@@ -227,19 +244,20 @@ def build_standings(games):
     return teams
 
 
-def build_fantasy_standings(country_standings, games):
+def build_fantasy_standings(country_standings, games, todays_teams):
     country_pts = {name: data["Pts"] for name, data in country_standings.items()}
     country_gp  = {name: data["GP"]  for name, data in country_standings.items()}
     eliminated  = get_eliminated_teams(country_standings, games)
     rows = []
     for team_name, countries in FANTASY_TEAMS.items():
-        country_data = [(c, country_pts.get(c, 0)) for c in countries]
-        total    = sum(pts for _, pts in country_data)
-        gp_total = sum(country_gp.get(c, 0) for c in countries)
-        alive    = sum(1 for c in countries if c not in eliminated)
-        breakdown = ", ".join(f"{c} ({pts})" for c, pts in country_data)
+        country_data  = [(c, country_pts.get(c, 0)) for c in countries]
+        total         = sum(pts for _, pts in country_data)
+        gp_total      = sum(country_gp.get(c, 0) for c in countries)
+        alive         = sum(1 for c in countries if c not in eliminated)
+        today_count   = sum(1 for c in countries if c in todays_teams)
+        breakdown     = ", ".join(f"{c} ({pts})" for c, pts in country_data)
         rows.append({"Team": team_name, "Total Pts": total, "GP": gp_total, "Alive": alive,
-                     "Countries": breakdown, "CountryData": country_data})
+                     "Today": today_count, "Countries": breakdown, "CountryData": country_data})
     rows.sort(key=lambda r: r["Total Pts"], reverse=True)
     for i, r in enumerate(rows, 1):
         r["Rank"] = i
@@ -274,6 +292,7 @@ def write_html(standings, fantasy_rows):
     # Fantasy table rows with podium styling
     medals = {1: "&#127945;", 2: "&#129352;", 3: "&#129353;"}
     podium_cls = {1: "gold", 2: "silver", 3: "bronze"}
+    today_label = datetime.utcnow().strftime("%b %d")
     fantasy_rows_html = ""
     for r in fantasy_rows:
         rank = r["Rank"]
@@ -282,6 +301,8 @@ def write_html(standings, fantasy_rows):
         safe_team = r["Team"].replace("&", "&amp;")
         alive = r["Alive"]
         alive_cls = "alive-hi" if alive >= 10 else ("alive-mid" if alive >= 7 else "alive-lo")
+        today_cnt = r["Today"]
+        today_cls = "today-hi" if today_cnt >= 3 else ("today-mid" if today_cnt >= 1 else "num")
         fantasy_rows_html += f"""
             <tr class="{row_cls}">
               <td class="num medal-cell">{medal_html}</td>
@@ -289,6 +310,7 @@ def write_html(standings, fantasy_rows):
               <td class="pts">{r['Total Pts']}</td>
               <td class="num sm">{r['GP']}</td>
               <td class="num {alive_cls}">{alive}/12</td>
+              <td class="num {today_cls}">{today_cnt}</td>
             </tr>"""
 
     # Embed country data for popups
@@ -346,6 +368,8 @@ def write_html(standings, fantasy_rows):
     .alive-hi  {{ color: #3fb950; font-weight: 700; }}
     .alive-mid {{ color: #d29922; font-weight: 700; }}
     .alive-lo  {{ color: #f85149; font-weight: 700; }}
+    .today-hi  {{ color: #79c0ff; font-weight: 700; }}
+    .today-mid {{ color: #79c0ff; font-weight: 600; }}
 
     /* Modal */
     .overlay {{ display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(3px); }}
@@ -436,7 +460,7 @@ def write_html(standings, fantasy_rows):
     <table>
       <thead>
         <tr>
-          <th>#</th><th class="left">Team</th><th>Pts</th><th class="sm">GP</th><th>Alive</th>
+          <th>#</th><th class="left">Team</th><th>Pts</th><th class="sm">GP</th><th>Alive</th><th>Games Today ({today_label})</th>
         </tr>
       </thead>
       <tbody>{fantasy_rows_html}
@@ -590,7 +614,8 @@ def write_excel(standings, fantasy_rows):
     df = pd.DataFrame(list(standings.values()), columns=cols)
     df = df.sort_values(["Pts", "GD", "GF"], ascending=False).reset_index(drop=True)
     df.insert(0, "Rank", range(1, len(df) + 1))
-    df2 = pd.DataFrame(fantasy_rows, columns=["Rank", "Team", "Total Pts", "GP", "Alive", "Countries"])
+    today_label = date.today().strftime("%b %d")
+    df2 = pd.DataFrame(fantasy_rows, columns=["Rank", "Team", "Total Pts", "GP", "Alive", f"Games Today ({today_label})", "Countries"])
 
     def style_sheet(ws, team_col=1):
         hf = PatternFill("solid", fgColor="1F4E79")
@@ -664,7 +689,8 @@ def main():
         print("No completed games found yet.")
         return
 
-    fantasy_rows = build_fantasy_standings(standings, games)
+    todays_teams = get_todays_teams(today)
+    fantasy_rows = build_fantasy_standings(standings, games, todays_teams)
 
     write_html(standings, fantasy_rows)
 
