@@ -493,5 +493,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760458": {
+    "id": "760458",
+    "date": "2026-06-23",
+    "home": "England",
+    "away": "Ghana",
+    "home_score": 0,
+    "away_score": 0,
+    "home_winner": false,
+    "away_winner": false,
+    "penalties": false
   }
 }
