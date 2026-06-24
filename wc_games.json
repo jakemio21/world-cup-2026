@@ -515,5 +515,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760459": {
+    "id": "760459",
+    "date": "2026-06-24",
+    "home": "Colombia",
+    "away": "Congo DR",
+    "home_score": 1,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
