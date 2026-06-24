@@ -504,5 +504,16 @@
     "home_winner": false,
     "away_winner": false,
     "penalties": false
+  },
+  "760460": {
+    "id": "760460",
+    "date": "2026-06-23",
+    "home": "Panama",
+    "away": "Croatia",
+    "home_score": 0,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
