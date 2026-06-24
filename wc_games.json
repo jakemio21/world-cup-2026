@@ -493,5 +493,60 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760458": {
+    "id": "760458",
+    "date": "2026-06-23",
+    "home": "England",
+    "away": "Ghana",
+    "home_score": 0,
+    "away_score": 0,
+    "home_winner": false,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760460": {
+    "id": "760460",
+    "date": "2026-06-23",
+    "home": "Panama",
+    "away": "Croatia",
+    "home_score": 0,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
+  },
+  "760459": {
+    "id": "760459",
+    "date": "2026-06-24",
+    "home": "Colombia",
+    "away": "Congo DR",
+    "home_score": 1,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760462": {
+    "id": "760462",
+    "date": "2026-06-24",
+    "home": "Bosnia-Herzegovina",
+    "away": "Qatar",
+    "home_score": 3,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760463": {
+    "id": "760463",
+    "date": "2026-06-24",
+    "home": "Switzerland",
+    "away": "Canada",
+    "home_score": 2,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
