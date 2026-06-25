@@ -548,5 +548,27 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760464": {
+    "id": "760464",
+    "date": "2026-06-24",
+    "home": "Morocco",
+    "away": "Haiti",
+    "home_score": 4,
+    "away_score": 2,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760465": {
+    "id": "760465",
+    "date": "2026-06-24",
+    "home": "Scotland",
+    "away": "Brazil",
+    "home_score": 0,
+    "away_score": 3,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
