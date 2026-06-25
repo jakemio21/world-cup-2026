@@ -570,5 +570,27 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760467": {
+    "id": "760467",
+    "date": "2026-06-25",
+    "home": "Czechia",
+    "away": "Mexico",
+    "home_score": 0,
+    "away_score": 3,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
+  },
+  "760466": {
+    "id": "760466",
+    "date": "2026-06-25",
+    "home": "South Africa",
+    "away": "South Korea",
+    "home_score": 1,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
