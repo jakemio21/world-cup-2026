@@ -592,5 +592,27 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760473": {
+    "id": "760473",
+    "date": "2026-06-25",
+    "home": "Cura\u00e7ao",
+    "away": "Ivory Coast",
+    "home_score": 0,
+    "away_score": 2,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
+  },
+  "760468": {
+    "id": "760468",
+    "date": "2026-06-25",
+    "home": "Ecuador",
+    "away": "Germany",
+    "home_score": 2,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
