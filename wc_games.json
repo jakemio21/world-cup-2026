@@ -614,5 +614,27 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760471": {
+    "id": "760471",
+    "date": "2026-06-25",
+    "home": "Japan",
+    "away": "Sweden",
+    "home_score": 1,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760472": {
+    "id": "760472",
+    "date": "2026-06-25",
+    "home": "Tunisia",
+    "away": "Netherlands",
+    "home_score": 1,
+    "away_score": 3,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
