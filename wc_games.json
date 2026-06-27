@@ -702,5 +702,27 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760476": {
+    "id": "760476",
+    "date": "2026-06-27",
+    "home": "Egypt",
+    "away": "Iran",
+    "home_score": 1,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760477": {
+    "id": "760477",
+    "date": "2026-06-27",
+    "home": "New Zealand",
+    "away": "Belgium",
+    "home_score": 1,
+    "away_score": 5,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
