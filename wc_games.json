@@ -680,5 +680,27 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760478": {
+    "id": "760478",
+    "date": "2026-06-27",
+    "home": "Cape Verde",
+    "away": "Saudi Arabia",
+    "home_score": 0,
+    "away_score": 0,
+    "home_winner": false,
+    "away_winner": false,
+    "penalties": false
+  },
+  "760479": {
+    "id": "760479",
+    "date": "2026-06-27",
+    "home": "Uruguay",
+    "away": "Spain",
+    "home_score": 0,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
