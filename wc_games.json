@@ -801,5 +801,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760487": {
+    "id": "760487",
+    "date": "2026-06-29",
+    "home": "Brazil",
+    "away": "Japan",
+    "home_score": 2,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
