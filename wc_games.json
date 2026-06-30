@@ -812,5 +812,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760489": {
+    "id": "760489",
+    "date": "2026-06-29",
+    "home": "Germany",
+    "away": "Paraguay",
+    "home_score": 1,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": true
   }
 }
