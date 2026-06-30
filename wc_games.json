@@ -823,5 +823,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": true
+  },
+  "760488": {
+    "id": "760488",
+    "date": "2026-06-30",
+    "home": "Netherlands",
+    "away": "Morocco",
+    "home_score": 1,
+    "away_score": 1,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": true
   }
 }
