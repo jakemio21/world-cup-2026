@@ -834,5 +834,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": true
+  },
+  "760490": {
+    "id": "760490",
+    "date": "2026-06-30",
+    "home": "Ivory Coast",
+    "away": "Norway",
+    "home_score": 1,
+    "away_score": 2,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
