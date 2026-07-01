@@ -856,5 +856,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760491": {
+    "id": "760491",
+    "date": "2026-07-01",
+    "home": "Mexico",
+    "away": "Ecuador",
+    "home_score": 2,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
