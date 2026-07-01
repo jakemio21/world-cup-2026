@@ -867,5 +867,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760495": {
+    "id": "760495",
+    "date": "2026-07-01",
+    "home": "England",
+    "away": "Congo DR",
+    "home_score": 2,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
