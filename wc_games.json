@@ -889,5 +889,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760494": {
+    "id": "760494",
+    "date": "2026-07-02",
+    "home": "United States",
+    "away": "Bosnia-Herzegovina",
+    "home_score": 2,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
