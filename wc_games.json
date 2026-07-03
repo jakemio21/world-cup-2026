@@ -922,5 +922,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760498": {
+    "id": "760498",
+    "date": "2026-07-03",
+    "home": "Switzerland",
+    "away": "Algeria",
+    "home_score": 2,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
