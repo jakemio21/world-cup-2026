@@ -911,5 +911,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760496": {
+    "id": "760496",
+    "date": "2026-07-02",
+    "home": "Portugal",
+    "away": "Croatia",
+    "home_score": 2,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
