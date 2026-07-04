@@ -955,5 +955,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760501": {
+    "id": "760501",
+    "date": "2026-07-04",
+    "home": "Colombia",
+    "away": "Ghana",
+    "home_score": 1,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
