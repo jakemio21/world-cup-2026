@@ -966,5 +966,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760502": {
+    "id": "760502",
+    "date": "2026-07-04",
+    "home": "Canada",
+    "away": "Morocco",
+    "home_score": 0,
+    "away_score": 3,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
