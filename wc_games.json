@@ -999,5 +999,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760505": {
+    "id": "760505",
+    "date": "2026-07-06",
+    "home": "Mexico",
+    "away": "England",
+    "home_score": 2,
+    "away_score": 3,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
