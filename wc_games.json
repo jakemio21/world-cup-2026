@@ -988,5 +988,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760504": {
+    "id": "760504",
+    "date": "2026-07-05",
+    "home": "Brazil",
+    "away": "Norway",
+    "home_score": 1,
+    "away_score": 2,
+    "home_winner": false,
+    "away_winner": true,
+    "penalties": false
   }
 }
