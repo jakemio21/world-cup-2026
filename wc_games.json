@@ -1065,5 +1065,16 @@
     "home_winner": true,
     "away_winner": false,
     "penalties": false
+  },
+  "760511": {
+    "id": "760511",
+    "date": "2026-07-10",
+    "home": "Spain",
+    "away": "Belgium",
+    "home_score": 2,
+    "away_score": 1,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
