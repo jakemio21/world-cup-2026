@@ -1131,5 +1131,16 @@
     "home_winner": false,
     "away_winner": true,
     "penalties": false
+  },
+  "760517": {
+    "id": "760517",
+    "date": "2026-07-19",
+    "home": "Spain",
+    "away": "Argentina",
+    "home_score": 1,
+    "away_score": 0,
+    "home_winner": true,
+    "away_winner": false,
+    "penalties": false
   }
 }
